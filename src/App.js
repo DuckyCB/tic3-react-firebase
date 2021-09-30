@@ -1,26 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { Container, Flex, Spinner, VStack } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import Post from "./components/post";
+import db from "./lib/firebase";
 
-function App() {
+const App = () => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    // Hook to handle the initial fetching of posts
+
+    db.collection("posts")
+       .orderBy("createdAt", "desc")
+       .get()
+       .then((querySnapshot) => {
+         const data = querySnapshot.docs.map((doc) => ({
+           id: doc.id,
+           ...doc.data(),
+         }));
+
+         setPosts(data);
+       });
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+     <>
+       <Container maxW="md" centerContent p={8}>
+         <VStack spacing={8} w="100%">
+           {posts.map((post) => (
+              <Post post={post} key={post.id} />
+           ))}
+         </VStack>
+       </Container>
+     </>
   );
-}
-
+};
 
 export default App;
