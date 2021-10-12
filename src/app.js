@@ -4,12 +4,17 @@ import { ReactComponent as CaretIcon } from './components/assets/icons/caret.svg
 import { ReactComponent as PlusIcon } from './components/assets/icons/plus.svg';
 
 import React, { useEffect, useState } from "react";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
-import Post from "./components/post";
+// import Post from "./components/post";
 import db from "./firebase/firebaseConfig";
 import Navbar from "./components/navbar";
 import NavItem from "./components/navitem";
 import DropdownMenu from "./components/dropdown-menu";
+import UserProfile from "./components/userprofile";
+import Feed from "./components/feed";
+import AddNewPost from "./components/add-new-post";
+import Footer from "./components/footer";
 
 const App = () => {
     const [posts, setPosts] = useState([]);
@@ -27,6 +32,10 @@ const App = () => {
 
         getPosts();
 
+        console.log(posts)
+
+        // console.log(posts.find(p =>))
+
         // db.collection("posts")
         //     .orderBy("createdAt", "desc")
         //     .get()
@@ -43,23 +52,37 @@ const App = () => {
 
     return (
         <>
-            <Navbar>
-                <NavItem icon={<PlusIcon />} />
-                <NavItem icon={<BellIcon />} />
-                <NavItem icon={<MessengerIcon />} />
+            <Router>
+                <div className="App">
+                    <Navbar>
+                        <NavItem icon={<PlusIcon />} />
+                        <NavItem icon={<BellIcon />} />
+                        <NavItem icon={<MessengerIcon />} />
 
-                <NavItem icon={<CaretIcon />}>
-                    <DropdownMenu></DropdownMenu>
-                </NavItem>
-            </Navbar>
-            <div>
-                <div>
-                    {posts.docs[0].data().title}
-                    {/*{posts.map((post) => (*/}
-                    {/*    <Post post={post} key={post.id} />*/}
-                    {/*))}*/}
+                        <NavItem icon={<CaretIcon />}>
+                            <DropdownMenu/>
+                        </NavItem>
+                    </Navbar>
+                    <div className="content">
+                        <Switch>
+                            <Route exact path="/">
+                                <Feed />
+                            </Route>
+                            <Route path="/user">
+                                <UserProfile />
+                            </Route>
+                        </Switch>
+                        <AddNewPost />
+                        <div>
+                            {/*{posts.docs[0].data().title}*/}
+                            {/*{posts.map((post) => (*/}
+                            {/*    <Post post={post} key={post.id} />*/}
+                            {/*))}*/}
+                        </div>
+                    </div>
+                    <Footer />
                 </div>
-            </div>
+            </Router>
         </>
     );
 };

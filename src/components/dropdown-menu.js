@@ -3,8 +3,7 @@ import {ReactComponent as CogIcon} from "./assets/icons/cog.svg";
 import {ReactComponent as ChevronIcon} from "./assets/icons/chevron.svg";
 import {ReactComponent as ArrowIcon} from "./assets/icons/arrow.svg";
 import {ReactComponent as BoltIcon} from "./assets/icons/bolt.svg";
-import React, {useEffect, useRef, useState} from "react";
-import Navbar from "./navbar";
+import React, {useEffect, useRef, useState} from "react";;
 
 
 function DropdownMenu() {
