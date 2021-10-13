@@ -1,14 +1,15 @@
 import React from "react";
 
-function Feed() {
+function Feed(props) {
+    console.log(props)
+    const posts = props.value;
+    console.log(posts)
     return (
         <div className="feed">
-            <h2>Feed</h2>
-            <div>
-                Posts
-            </div>
+            {posts}
         </div>
     );
 }
+//this.posts.map((post) => <Post post={post} />)
 
 export default Feed;
