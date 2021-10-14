@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
-// import Post from "./components/post";
-import db from "./firebase/firebaseConfig";
+import db from "./lib/firebase";
 import Navbar from "./components/navbar";
 import NavItem from "./components/navitem";
 import DropdownMenu from "./components/dropdown-menu";
