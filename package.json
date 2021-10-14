@@ -3,24 +3,31 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@chakra-ui/gatsby-plugin": "^2.0.1",
     "@chakra-ui/icons": "^1.0.15",
     "@chakra-ui/react": "^1.6.9",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "autoprefixer": "^10.3.7",
     "firebase": "^9.1.2",
     "framer-motion": "^4.1.17",
+    "postcss": "^8.3.9",
+    "postcss-cli": "^9.0.1",
+    "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
+    "react-loading-skeleton": "^2.2.0",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
     "react-transition-group": "^4.4.2",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
+    "build:css": "postcss src/styles/styles.css -o src/styles/app.css",
+    "watch:css": "postcss src/styles/styles.css -o src/styles/app.css --watch",
+    "react-scrypts:start": "sleep 5 && react-scripts start",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "build:css react-scripts build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

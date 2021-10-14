@@ -1,79 +1,48 @@
-import React, { useEffect, useState } from "react";
+import {lazy, Suspense, useEffect, useState} from "react";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
-import db from "./lib/firebase";
+import {db} from "./lib/firebase";
 import Navbar from "./components/navbar";
-import NavItem from "./components/navitem";
-import DropdownMenu from "./components/dropdown-menu";
 import UserProfile from "./components/userprofile";
-import Feed from "./components/feed";
-import AddNewPost from "./components/add-new-post";
-import Footer from "./components/footer";
-import ArticleList from "./components/articlelist";
-import Post from "./components/post";
+import * as ROUTES from './constants/routes'
 
-const App = () => {
-    const [posts, setPosts] = useState([]);
 
-    useEffect(() => {
-        // Hook to handle the initial fetching of posts
+const Main = lazy(() => import('./pages/main'))
+const Login = lazy(() => import('./pages/login'))
+const Signup = lazy(() => import('./pages/signup'))
 
-        const getPosts = async() => {
-            const data = await getDocs(collection(db, 'posts'));
-            //TODO: Ver como obtener los datos y pasarlos a los demas componentes
-            data.forEach((doc) => {
-                console.log(`${doc.id} => ${doc.data()}`);
-            });
-            setPosts(data);
-        }
-
-        getPosts();
-
-        // console.log(posts.find(p =>))
-
-        // db.collection("posts")
-        //     .orderBy("createdAt", "desc")
-        //     .get()
-        //     .then((querySnapshot) => {
-        //         const data = querySnapshot.docs.map((doc) => ({
-        //             id: doc.id,
-        //             ...doc.data(),
-        //         }));
-        //
-        //         setPosts(data);
-        //     });
-
-    }, []);
+function App () {
+    // const [posts, setPosts] = useState([]);
+    //
+    // useEffect(() => {
+    //     // Hook to handle the initial fetching of posts
+    //
+    //     const getPosts = async() => {
+    //         const data = await getDocs(collection(db, 'posts'));
+    //         //TODO: Ver como obtener los datos y pasarlos a los demas componentes
+    //         data.forEach((doc) => {
+    //             console.log(`${doc.id} => ${doc.data()}`);
+    //         });
+    //         setPosts(data);
+    //     }
+    //
+    //     getPosts();
+    //
+    // }, []);
 
     return (
         <>
             <Router>
-                <div className="App">
-                    <Navbar />
-                    <div className="content">
-                        <Switch>
-                            <Route exact path="/">
-                                {/*https://www.youtube.com/watch?v=1TYObnD0RCA*/}
-                                {/*{posts.map((post) =>*/}
-                                {/*    <Post post={post} />)*/}
-                                {/*}*/}
-                                {/*<Feed post={posts}/>*/}
-                                <AddNewPost />
-                                <ArticleList />
-                            </Route>
-                            <Route path="/user">
-                                <UserProfile />
-                            </Route>
-                        </Switch>
-                        <div>
-                            {/*{posts.docs[0].data().title}*/}
-                            {/*{posts.map((post) => (*/}
-                            {/*    <Post post={post} key={post.id} />*/}
-                            {/*))}*/}
-                        </div>
-                    </div>
-                    <Footer />
-                </div>
+                <Suspense fallback={<p> Loading ... </p>}>
+                    <Switch>
+                        <Route exact path={ROUTES.MAIN} component={Main}/>
+                        <Route exact path={ROUTES.LOGIN} component={Login}/>
+                        <Route exact path={ROUTES.SIGNUP} component={Signup}/>
+                        <Route path="/user">
+                            <UserProfile />
+                        </Route>
+                    </Switch>
+                </Suspense>
             </Router>
         </>
     );

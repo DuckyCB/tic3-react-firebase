@@ -47,7 +47,7 @@ export const BlogAuthor: React.FC<BlogAuthorProps> = (props) => {
 const ArticleList = () => {
 	return (
 		<Container maxW={'7xl'} p="12">
-			<Heading as="h1">Stories by Chakra Templates</Heading>
+			<Heading as="h1"> Proyecto tic 3</Heading>
 			<Box
 				marginTop={{base: '1', sm: '5'}}
 				display="flex"
@@ -93,10 +93,9 @@ const ArticleList = () => {
 					flexDirection="column"
 					justifyContent="center"
 					marginTop={{base: '3', sm: '0'}}>
-					<BlogTags tags={['Engineering', 'Product']}/>
 					<Heading marginTop="1">
 						<Link textDecoration="none" _hover={{textDecoration: 'none'}}>
-							Blog article title
+							Cosa
 						</Link>
 					</Heading>
 					<Text
