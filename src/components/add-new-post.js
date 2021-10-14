@@ -9,6 +9,7 @@ import {
     ModalOverlay, Textarea,
     useDisclosure
 } from "@chakra-ui/react";
+import {collection} from "firebase/firestore";
 
 const AddNewPost = () => {
     const {isOpen, onOpen, onClose} = useDisclosure();
@@ -18,7 +19,7 @@ const AddNewPost = () => {
     const handleSubmit = async () => {
         const date = new Date();
 
-        await db.collection("posts").add({
+        await collection(db, "posts").add({
             title,
             upVotesCount: 0,
             downVotesCount: 0,

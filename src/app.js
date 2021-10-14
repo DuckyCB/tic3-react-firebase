@@ -1,10 +1,12 @@
 import {lazy, Suspense, useEffect, useState} from "react";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import { collection, getDocs } from "firebase/firestore";
 import {db} from "./lib/firebase";
-import Navbar from "./components/navbar";
 import UserProfile from "./components/userprofile";
 import * as ROUTES from './constants/routes'
+import Post from "./components/post";
+import {Container, VStack} from "@chakra-ui/react";
+import {orderBy, collection, getDocs, query} from "firebase/firestore";
+
 
 
 const Main = lazy(() => import('./pages/main'))
@@ -12,23 +14,6 @@ const Login = lazy(() => import('./pages/login'))
 const Signup = lazy(() => import('./pages/signup'))
 
 function App () {
-    // const [posts, setPosts] = useState([]);
-    //
-    // useEffect(() => {
-    //     // Hook to handle the initial fetching of posts
-    //
-    //     const getPosts = async() => {
-    //         const data = await getDocs(collection(db, 'posts'));
-    //         //TODO: Ver como obtener los datos y pasarlos a los demas componentes
-    //         data.forEach((doc) => {
-    //             console.log(`${doc.id} => ${doc.data()}`);
-    //         });
-    //         setPosts(data);
-    //     }
-    //
-    //     getPosts();
-    //
-    // }, []);
 
     return (
         <>
@@ -44,8 +29,9 @@ function App () {
                     </Switch>
                 </Suspense>
             </Router>
+
         </>
     );
-};
+}
 
 export default App;

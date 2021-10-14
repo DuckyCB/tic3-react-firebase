@@ -1,12 +1,13 @@
 import React from "react";
+import {Box, HStack, Text} from "@chakra-ui/react";
 
-const Post = (post) => {
+const Post = ({post}) => {
    return (
-      <div key={post.id}>
-         <div>
-            <p>{post.title}</p>
-         </div>
-      </div>
+      <HStack key={post.id} w="100%" alignItems="flex-start">
+         <Box bg="gray.100" p={4} rounded="md" w="100%">
+            <Text>{post.title}</Text>
+         </Box>
+      </HStack>
    );
 };
 
