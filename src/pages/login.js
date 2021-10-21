@@ -45,10 +45,12 @@ export default function Login() {
 					<input aria-label="Enter your email address" type="text" placeholder="Email Address"
 						   className=""
 						   onChange={({target}) => setEmailAddress(target.value)}
+						   value={emailAddress}
 					/>
 					<input aria-label="Entero your password" type="password" placeholder="Password"
 						   className=""
 						   onChange={({target}) => setPassword(target.value)}
+						   value={password}
 					/>
 					<button disabled={isInvalid} type="submit"
 							className="">
