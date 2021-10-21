@@ -1,20 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './app';
-import {ChakraProvider, ColorModeScript} from "@chakra-ui/react";
 import theme from "./components/theme";
 import FirebaseContext from "./context/firebase";
 import { app, db } from "./lib/firebase";
 import './styles/styles.css';
+import {ThemeProvider} from "@mui/material";
 
 ReactDOM.render(
 	<React.StrictMode>
-		<ChakraProvider>
+		<ThemeProvider theme={theme}>
 			<FirebaseContext.Provider value={{ app, db}}>
-				<ColorModeScript initialColorMode={theme.config.initialColorMode} />
-				<App />
+				<App/>
 			</FirebaseContext.Provider>
-		</ChakraProvider>
+		</ThemeProvider>
 	</React.StrictMode>,
 	document.getElementById('root')
 );

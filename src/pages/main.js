@@ -23,6 +23,7 @@ export default function Main() {
 			})
 		})
 		setPosts(_posts);
+		console.log(_posts)
 	},[])
 
 	return (
