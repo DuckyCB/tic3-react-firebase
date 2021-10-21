@@ -10,7 +10,7 @@ import {db} from "../lib/firebase";
 export default function Main() {
 	const [posts, setPosts] = useState([]);
 
-	//TODO: Ver como obtener los datos y pasarlos a los demas componentes
+	//TODO: Ver como obtener los datos y pasarlos a los demás componentes
 
 	useEffect(  async () => {
 		const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
