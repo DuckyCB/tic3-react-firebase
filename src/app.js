@@ -10,7 +10,6 @@ const Signup = lazy(() => import('./pages/signup'))
 const NotFound = lazy(() => import('./pages/notfound'))
 
 export default function App () {
-
     return (
         <>
             <Router>
@@ -21,7 +20,7 @@ export default function App () {
                         <Route path={ROUTES.SIGNUP} component={Signup}/>
                         <Route component={NotFound}/>
                         <Route path="/user">
-                            <UserProfile />
+                            <UserProfile/>
                         </Route>
                     </Switch>
                 </Suspense>

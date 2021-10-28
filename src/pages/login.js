@@ -2,7 +2,7 @@ import {useHistory, Link} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import FirebaseContext from "../context/firebase";
 import * as ROUTES from "../constants/routes";
-
+import {doesUsernameExist} from "../services/firebase";
 
 export default function Login() {
 	const history = useHistory();
@@ -16,15 +16,28 @@ export default function Login() {
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
-		try {
-			await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
-			history.push(ROUTES.DASHBOARD)
-		} catch (e) {
+
+		if (await doesUsernameExist(emailAddress, password)) {
+			history.push(ROUTES.DASHBOARD);
+		} else {
 			setEmailAddress('');
 			setPassword('');
-			setError(e.message);
+			setError('no pudiste capo');
 		}
-	};
+
+		//	Codigo Maxi
+		// try {
+		// 	await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
+		// 	history.push(ROUTES.DASHBOARD)
+		// } catch (e) {
+		// 	setEmailAddress('');
+		// 	setPassword('');
+		// 	setError(e.message);
+		// }
+	}
+
+
+
 
 	useEffect(() => {
 		document.title = 'Kinchoo login';
@@ -42,7 +55,7 @@ export default function Login() {
 				{error && <p> Error </p>}
 
 				<form onSubmit={handleLogin} method="POST">
-					<input aria-label="Enter your email address" type="text" placeholder="Email Address"
+					<input aria-label="Enter your email address or username" type="text" placeholder="Email Address"
 						   className=""
 						   onChange={({target}) => setEmailAddress(target.value)}
 						   value={emailAddress}
