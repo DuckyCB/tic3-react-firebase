@@ -1,5 +1,4 @@
 import React from "react";
-// import {HStack} from "@chakra-ui/react";
 import {Card, CardContent, CardHeader, CardMedia, Typography} from "@mui/material";
 import VoteButtons from "./vote-buttons";
 
@@ -14,7 +13,7 @@ const Post = ({post}) => {
         />
     }
    return (
-       <Card sx={{ width: 6/10 }}>
+       <Card key={post.id} sx={{ width: 6/10 }}>
 
            <CardHeader title={post.title}/>
            <CardContent>
@@ -25,12 +24,6 @@ const Post = ({post}) => {
            </CardContent>
            <VoteButtons post = {post}/>
        </Card>
-
-      // <HStack key={post.id} w="100%" alignItems="flex-start">
-      //    <Box bg="gray.100" p={4} rounded="md" w="100%">
-      //       <Text>{post.title}</Text>
-      //    </Box>
-      // </HStack>
    );
 };
 

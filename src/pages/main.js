@@ -2,10 +2,10 @@ import Navbar from "../components/navbar";
 import React, {useEffect, useState} from "react";
 import Footer from "../components/footer";
 import AddNewPost from "../components/add-new-post";
-import {Container, VStack} from "@chakra-ui/react";
 import Post from "../components/post";
 import {collection, getDocs, orderBy, query} from "firebase/firestore";
 import {db} from "../lib/firebase";
+import {Stack} from "@mui/material";
 
 export default function Main() {
 	const [posts, setPosts] = useState([]);
@@ -30,13 +30,14 @@ export default function Main() {
 			<Navbar />
 			<AddNewPost />
 			<p> Main page </p>
-			<Container maxW="md" centerContent p={8}>
-				<VStack spacing={8} w="100%">
+				<Stack spacing={4}
+					   justifyContent="center"
+					   alignItems="center"
+				>
 					{posts.map((post) => (
 						<Post post={post} key={post.id} />
 					))}
-				</VStack>
-			</Container>
+				</Stack>
 			<Footer />
 		</>
 	)
