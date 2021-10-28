@@ -3,7 +3,6 @@ import {Stack} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import {collection, onSnapshot, orderBy, query} from "firebase/firestore";
 import {db} from "../lib/firebase";
-import AddNewPost from "./add-new-post";
 
 export default function Timeline() {
 	const [posts, setPosts] = useState([]);
@@ -26,7 +25,6 @@ export default function Timeline() {
 	return (
 		<div>
 			Timeline
-			<AddNewPost />
 			<Stack spacing={4} justifyContent="center" alignItems="center">
 				{posts.map((post) => (
 					<Post post={post} key={post.id} />
