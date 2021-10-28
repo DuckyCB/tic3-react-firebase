@@ -1,103 +1,151 @@
-import {ReactNode} from 'react';
-import {
-	Box, Flex, Avatar, HStack, Link, IconButton, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider,
-	useDisclosure, useColorModeValue, Stack
-} from '@chakra-ui/react';
-import {HamburgerIcon, CloseIcon} from '@chakra-ui/icons';
-
-const Links = ['Dashboard', 'Projects', 'Team'];
-
-const NavLink = ({children}: { children: ReactNode }) => (
-	<Link
-		px={2}
-		py={1}
-		rounded={'md'}
-		_hover={{
-			textDecoration: 'none',
-			bg: useColorModeValue('gray.200', 'gray.700'),
-		}}
-		href={'#'}>
-		{children}
-	</Link>
-);
-
+// import './index.css';
+// import { ReactComponent as BellIcon } from './icons/bell.svg';
+// import { ReactComponent as MessengerIcon } from './icons/messenger.svg';
+// import { ReactComponent as CaretIcon } from './icons/caret.svg';
+// import { ReactComponent as PlusIcon } from './icons/plus.svg';
+// import { ReactComponent as CogIcon } from './icons/cog.svg';
+// import { ReactComponent as ChevronIcon } from './icons/chevron.svg';
+// import { ReactComponent as ArrowIcon } from './icons/arrow.svg';
+// import { ReactComponent as BoltIcon } from './icons/bolt.svg';
+//
+// import React, { useState, useEffect, useRef } from 'react';
+// import { CSSTransition } from 'react-transition-group';
+//
+// // TODO: ESTO SE VA
+// function App() {
+// 	return (
+// 		<Navbar>
+// 			<NavItem icon={<PlusIcon />} />
+// 			<NavItem icon={<BellIcon />} />
+// 			<NavItem icon={<MessengerIcon />} />
+//
+// 			<NavItem icon={<CaretIcon />}>
+// 				<DropdownMenu></DropdownMenu>
+// 			</NavItem>
+// 		</Navbar>
+// 	);
+// }
+//
 export default function Navbar() {
-	const {isOpen, onOpen, onClose} = useDisclosure();
-
 	return (
-		<>
-			<Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
-				<Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-					<IconButton
-						size={'md'}
-						icon={isOpen ? <CloseIcon/> : <HamburgerIcon/>}
-						aria-label={'Open Menu'}
-						display={{md: 'none'}}
-						onClick={isOpen ? onClose : onOpen}
-					/>
-					<HStack spacing={8} alignItems={'center'}>
-						<Box>Logo</Box>
-						<HStack
-							as={'nav'}
-							spacing={4}
-							display={{base: 'none', md: 'flex'}}>
-							{Links.map((link) => (
-								<NavLink key={link}>{link}</NavLink>
-							))}
-						</HStack>
-					</HStack>
-					<Flex alignItems={'center'}>
-						<Menu>
-							<MenuButton
-								as={Button}
-								rounded={'full'}
-								variant={'link'}
-								cursor={'pointer'}
-								minW={0}>
-								<Avatar
-									size={'sm'}
-									src={
-										'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-									}
-								/>
-							</MenuButton>
-							<MenuList>
-								<MenuItem>Link 1</MenuItem>
-								<MenuItem>Link 2</MenuItem>
-								<MenuDivider/>
-								<MenuItem>Link 3</MenuItem>
-							</MenuList>
-						</Menu>
-					</Flex>
-				</Flex>
-
-				{isOpen ? (
-					<Box pb={4} display={{md: 'none'}}>
-						<Stack as={'nav'} spacing={4}>
-							{Links.map((link) => (
-								<NavLink key={link}>{link}</NavLink>
-							))}
-						</Stack>
-					</Box>
-				) : null}
-			</Box>
-		</>
-	);
+		<p>navbar</p>
+	)
 }
-
-// function Navbar(props) {
+// export default function Navbar() {
 // 	return (
 // 		<nav className="navbar">
-// 			{/*<NavItem icon={<PlusIcon />} />*/}
-// 			{/*<NavItem icon={<BellIcon />} />*/}
-// 			{/*<NavItem icon={<MessengerIcon />} />*/}
-//
-// 			{/*<NavItem icon={<CaretIcon />}>*/}
-// 				<DropdownMenu/>
-// 			{/*</NavItem>*/}
 // 			{/*<ul className="navbar-nav">{props.children}</ul>*/}
+// 			<NavItem icon={<PlusIcon />} />
+// 			<NavItem icon={<BellIcon />} />
+// 			<NavItem icon={<MessengerIcon />} />
+//
+// 			<NavItem icon={<CaretIcon />}>
+// 				<DropdownMenu></DropdownMenu>
+// 			</NavItem>
 // 		</nav>
 // 	);
 // }
 //
-// export default Navbar;
+// function NavItem(props) {
+// 	const [open, setOpen] = useState(false);
+//
+// 	return (
+// 		<li className="nav-item">
+// 			<a href="#" className="icon-button" onClick={() => setOpen(!open)}>
+// 				{props.icon}
+// 			</a>
+//
+// 			{open && props.children}
+// 		</li>
+// 	);
+// }
+//
+// function DropdownMenu() {
+// 	const [activeMenu, setActiveMenu] = useState('main');
+// 	const [menuHeight, setMenuHeight] = useState(null);
+// 	const dropdownRef = useRef(null);
+//
+// 	useEffect(() => {
+// 		setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
+// 	}, [])
+//
+// 	function calcHeight(el) {
+// 		const height = el.offsetHeight;
+// 		setMenuHeight(height);
+// 	}
+//
+// 	function DropdownItem(props) {
+// 		return (
+// 			<a href="#" className="menu-item" onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
+// 				<span className="icon-button">{props.leftIcon}</span>
+// 				{props.children}
+// 				<span className="icon-right">{props.rightIcon}</span>
+// 			</a>
+// 		);
+// 	}
+//
+// 	return (
+// 		<div className="dropdown" style={{ height: menuHeight }} ref={dropdownRef}>
+//
+// 			<CSSTransition
+// 				in={activeMenu === 'main'}
+// 				timeout={500}
+// 				classNames="menu-primary"
+// 				unmountOnExit
+// 				onEnter={calcHeight}>
+// 				<div className="menu">
+// 					<DropdownItem>My Profile</DropdownItem>
+// 					<DropdownItem
+// 						leftIcon={<CogIcon />}
+// 						rightIcon={<ChevronIcon />}
+// 						goToMenu="settings">
+// 						Settings
+// 					</DropdownItem>
+// 					<DropdownItem
+// 						leftIcon="🦧"
+// 						rightIcon={<ChevronIcon />}
+// 						goToMenu="animals">
+// 						Animals
+// 					</DropdownItem>
+//
+// 				</div>
+// 			</CSSTransition>
+//
+// 			<CSSTransition
+// 				in={activeMenu === 'settings'}
+// 				timeout={500}
+// 				classNames="menu-secondary"
+// 				unmountOnExit
+// 				onEnter={calcHeight}>
+// 				<div className="menu">
+// 					<DropdownItem goToMenu="main" leftIcon={<ArrowIcon />}>
+// 						<h2>My Tutorial</h2>
+// 					</DropdownItem>
+// 					<DropdownItem leftIcon={<BoltIcon />}>HTML</DropdownItem>
+// 					<DropdownItem leftIcon={<BoltIcon />}>CSS</DropdownItem>
+// 					<DropdownItem leftIcon={<BoltIcon />}>JavaScript</DropdownItem>
+// 					<DropdownItem leftIcon={<BoltIcon />}>Awesome!</DropdownItem>
+// 				</div>
+// 			</CSSTransition>
+//
+// 			<CSSTransition
+// 				in={activeMenu === 'animals'}
+// 				timeout={500}
+// 				classNames="menu-secondary"
+// 				unmountOnExit
+// 				onEnter={calcHeight}>
+// 				<div className="menu">
+// 					<DropdownItem goToMenu="main" leftIcon={<ArrowIcon />}>
+// 						<h2>Animals</h2>
+// 					</DropdownItem>
+// 					<DropdownItem leftIcon="🦘">Kangaroo</DropdownItem>
+// 					<DropdownItem leftIcon="🐸">Frog</DropdownItem>
+// 					<DropdownItem leftIcon="🦋">Horse?</DropdownItem>
+// 					<DropdownItem leftIcon="🦔">Hedgehog</DropdownItem>
+// 				</div>
+// 			</CSSTransition>
+// 		</div>
+// 	);
+// }
+//
+// export default App;

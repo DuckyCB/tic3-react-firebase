@@ -4,7 +4,6 @@ import {collection, query, where, getDocs, auth} from "firebase/firestore";
 export async function doesUsernameExist(loginName, password) {
     // const result = await firebase.firestore.collection('users').where('username', '==', username)
 
-    // TODO: veriticar que esto funcione
 
     // const q = query(collection(db, 'users'), where('username', '==', username));
     // console.log('Query: ', q)

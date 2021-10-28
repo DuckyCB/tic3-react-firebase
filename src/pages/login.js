@@ -16,20 +16,28 @@ export default function Login() {
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
-		// try {
-		// 	// await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
-		// 	history.push(ROUTES.MAIN);
-		// } catch (e) {
 
-		// }
 		if (await doesUsernameExist(emailAddress, password)) {
-			history.push(ROUTES.MAIN);
+			history.push(ROUTES.DASHBOARD);
 		} else {
-			// setEmailAddress('');
-			// setPassword('');
+			setEmailAddress('');
+			setPassword('');
 			setError('no pudiste capo');
 		}
-	};
+
+		//	Codigo Maxi
+		// try {
+		// 	await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
+		// 	history.push(ROUTES.DASHBOARD)
+		// } catch (e) {
+		// 	setEmailAddress('');
+		// 	setPassword('');
+		// 	setError(e.message);
+		// }
+	}
+
+
+
 
 	useEffect(() => {
 		document.title = 'Kinchoo login';
