@@ -4,7 +4,7 @@ import {db} from "../lib/firebase";
 export async function doesUsernameExist(username) {
 	// const result = await firebase.firestore.collection('users').where('username', '==', username)
 
-	// TODO: veriticar que esto funcione
+	// TODO: Arreglar esto para devolver un booleano cuando un usuario existe
 
 	const q = query(collection(db, 'users'), where('username', '==', username));
 	console.log('Query: ', q)

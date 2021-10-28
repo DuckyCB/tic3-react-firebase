@@ -13,7 +13,7 @@ import {ReactNode} from 'react';
 
 const Logo = (props: any) => {
     return (
-        <img src="https://pbs.twimg.com/profile_banners/4272388694/1447812765/1500x500" alt=""/>
+        <img src="../../public/kinchoo.png" alt="Logo"/>
         // <svg
         //     height={32}
         //     viewBox="0 0 120 28"

@@ -18,7 +18,7 @@ export default function Login() {
 		event.preventDefault();
 		try {
 			await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
-			history.push(ROUTES.MAIN)
+			history.push(ROUTES.DASHBOARD)
 		} catch (e) {
 			setEmailAddress('');
 			setPassword('');

@@ -9,20 +9,22 @@ import {orderBy, collection, getDocs, query} from "firebase/firestore";
 
 
 
-const Main = lazy(() => import('./pages/main'))
+const Dashboard = lazy(() => import('./pages/dashboard'))
 const Login = lazy(() => import('./pages/login'))
 const Signup = lazy(() => import('./pages/signup'))
+const NotFound = lazy(() => import('./pages/notfound'))
 
-function App () {
+export default function App () {
 
     return (
         <>
             <Router>
                 <Suspense fallback={<p> Loading ... </p>}>
                     <Switch>
-                        <Route exact path={ROUTES.MAIN} component={Main}/>
-                        <Route exact path={ROUTES.LOGIN} component={Login}/>
-                        <Route exact path={ROUTES.SIGNUP} component={Signup}/>
+                        <Route exact path={ROUTES.DASHBOARD} component={Dashboard}/>
+                        <Route path={ROUTES.LOGIN} component={Login}/>
+                        <Route path={ROUTES.SIGNUP} component={Signup}/>
+                        <Route component={NotFound}/>
                         <Route path="/user">
                             <UserProfile />
                         </Route>
@@ -33,5 +35,3 @@ function App () {
         </>
     );
 }
-
-export default App;
