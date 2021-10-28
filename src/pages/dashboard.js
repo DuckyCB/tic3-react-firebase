@@ -1,10 +1,10 @@
 import Navbar from "../components/navbar";
-import React, {useEffect, useState} from "react";
-import {Grid} from "@chakra-ui/react";
+import React, {useEffect} from "react";
 import Timeline from "../components/timeline";
 import Sidebar from "../components/sidebar";
 import { ThemeProvider } from '@mui/material/styles';
 import theme from "../components/theme";
+import {Grid} from "@mui/material";
 
 export default function Dashboard() {
 

@@ -1,12 +1,7 @@
-import {lazy, Suspense, useEffect, useState} from "react";
+import {lazy, Suspense} from "react";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import {db} from "./lib/firebase";
 import UserProfile from "./components/userprofile";
 import * as ROUTES from './constants/routes'
-import Post from "./components/post";
-import {Container, VStack} from "@chakra-ui/react";
-import {orderBy, collection, getDocs, query} from "firebase/firestore";
-
 
 
 const Dashboard = lazy(() => import('./pages/dashboard'))
@@ -31,7 +26,6 @@ export default function App () {
                     </Switch>
                 </Suspense>
             </Router>
-
         </>
     );
 }
