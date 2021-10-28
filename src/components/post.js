@@ -4,12 +4,11 @@ import VoteButtons from "./vote-buttons";
 
 const Post = ({post}) => {
     let img;
-    if (post.imageURL) {
+    if (post.imgURL) {
         img = <CardMedia
             component="img"
-            height="194"
             alt="Image not fetched"
-            image={post.imageURL}
+            image={post.imgURL}
         />
     }
    return (
@@ -17,7 +16,7 @@ const Post = ({post}) => {
 
            <CardHeader title={post.title}/>
            <CardContent>
-               <Typography>
+               <Typography align={"justify"} >
                    {post.content}
                </Typography>
                {img}

@@ -25,8 +25,10 @@ const VoteButtons = ({ post }) => {
 
         await setDoc(doc(db,"posts", post.id), {
             title: post.title,
-            upVotesCount,
-            downVotesCount,
+            upVotesCount: upVotesCount,
+            downVotesCount: downVotesCount,
+            imgURL: post.imgURL,
+            content: post.content,
             createdAt: post.createdAt,
             updatedAt: Timestamp.fromDate(date)
         })
