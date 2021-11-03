@@ -18,9 +18,9 @@ const VoteButtons = ({ post }) => {
         const date = new Date();
 
         if (type === "upvote") {
-            upVotesCount = upVotesCount + 1;
+            upVotesCount++;
         } else {
-            downVotesCount = downVotesCount + 1;
+            downVotesCount++;
         }
 
         await setDoc(doc(db,"posts", post.id), {
@@ -32,7 +32,6 @@ const VoteButtons = ({ post }) => {
             createdAt: post.createdAt,
             updatedAt: Timestamp.fromDate(date)
         })
-        console.log(upVotesCount)
     };
 return (
     <>
