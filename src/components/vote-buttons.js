@@ -1,40 +1,51 @@
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import IconButton from '@mui/material/IconButton';
+import {Stack, Typography} from "@mui/material";
+import {doc, setDoc, Timestamp} from "firebase/firestore";
 const {db} = require("../lib/firebase");
 
 
 
 const VoteButtons = ({ post }) => {
+    let upVotesCount = post.upVotesCount;
+    let downVotesCount = post.downVotesCount;
     const handleClick = async (type) => {
         // Do calculation to save the vote.
-        let upVotesCount = post.upVotesCount;
-        let downVotesCount = post.downVotesCount;
+        upVotesCount = post.upVotesCount;
+        downVotesCount = post.downVotesCount;
 
         const date = new Date();
 
         if (type === "upvote") {
-            upVotesCount = upVotesCount + 1;
+            upVotesCount++;
         } else {
-            downVotesCount = downVotesCount + 1;
+            downVotesCount++;
         }
 
-        await db.collection("posts").doc(post.id).set({
+        await setDoc(doc(db,"posts", post.id), {
             title: post.title,
-            upVotesCount,
-            downVotesCount,
+            upVotesCount: upVotesCount,
+            downVotesCount: downVotesCount,
+            imgURL: post.imgURL,
+            content: post.content,
             createdAt: post.createdAt,
-            updatedAt: date.toUTCString(),
-        });
+            updatedAt: Timestamp.fromDate(date)
+        })
     };
 return (
     <>
-        <IconButton style={{ color: "#FF8b60"}} variant="outlined">
-            <ArrowUpwardIcon/>
-        </IconButton>
-        <IconButton style={{ color: "#9494FF"}} variant="outlined">
-            <ArrowDownwardIcon/>
-        </IconButton>
+        <Stack direction="row">
+            <IconButton style={{ color: "#FF8b60"}} variant="outlined" onClick={() => handleClick("upvote")}>
+                <ArrowUpwardIcon/>
+            </IconButton>
+            <IconButton style={{ color: "#9494FF"}} variant="outlined" onClick={() => handleClick("downvote")}>
+                <ArrowDownwardIcon/>
+            </IconButton>
+            <Typography p={1}>
+                {post.upVotesCount - post.downVotesCount}
+            </Typography>
+        </Stack>
     </>
 )}
 export default VoteButtons;
