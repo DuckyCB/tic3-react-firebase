@@ -24,7 +24,6 @@ export default function Timeline() {
 
 	return (
 		<div>
-			Timeline
 			<Stack spacing={4} justifyContent="center" alignItems="center">
 				{posts.map((post) => (
 					<Post post={post} key={post.id} />
