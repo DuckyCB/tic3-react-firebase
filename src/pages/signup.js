@@ -3,6 +3,15 @@ import {useContext, useEffect, useState} from "react";
 import FirebaseContext from "../context/firebase";
 import * as ROUTES from "../constants/routes";
 import {doesUsernameExist} from "../services/firebase";
+import Grid from "@mui/material/Grid";
+import theme from "../components/theme";
+import {ThemeProvider} from "@emotion/react";
+import {Checkbox, Container} from "@chakra-ui/react";
+import {CssBaseline, FormControlLabel, TextField} from "@mui/material";
+import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 
 export default function Signup() {
@@ -32,50 +41,87 @@ export default function Signup() {
 
 
 	return (
-		<div>
-			<div>
-				titulo, imagen, o algo capaz?
-			</div>
-			<div>
-				<p> Logo </p>
-
-				{error && <p> Error </p>}
-
-				<form onSubmit={handleSignup} method="POST">
-					<input aria-label="Enter a username" type="text" placeholder="Username"
-						   className=""
-						   onChange={({target}) => setUsername(target.value)}
-						   value={username}
-					/>
-					<input aria-label="Enter your full name" type="text" placeholder="Full name"
-						   className=""
-						   onChange={({target}) => setFullName(target.value)}
-						   value={fullName}
-					/>
-					<input aria-label="Enter your email address" type="text" placeholder="Email Address"
-						   className=""
-						   onChange={({target}) => setEmailAddress(target.value)}
-						   value={emailAddress}
-					/>
-					<input aria-label="Enter a password" type="password" placeholder="Password"
-						   className=""
-						   onChange={({target}) => setPassword(target.value)}
-						   value={password}
-					/>
-					<button disabled={isInvalid} type="submit"
-							className="">
+		<ThemeProvider theme={theme}>
+			<Container component="main" maxWidth="xs">
+				<CssBaseline />
+				<Box
+					sx={{
+						marginTop: 8,
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+					}}
+				>
+					<Avatar sx={{ m: 1, bgcolor: '#ef6c00' }}>
+						{/*<LockOutlinedIcon />*/}
+					</Avatar>
+					<Typography component="h1" variant="h5">
 						Sign up
-					</button>
-				</form>
-			</div>
-			<div>
-				<p>
-					Already have an account?
-					<Link to={ROUTES.LOGIN}>
-						Log in
-					</Link>
-				</p>
-			</div>
-		</div>
+					</Typography>
+					<Box component="form" noValidate onSubmit={handleSignup} sx={{ mt: 3 }}>
+						<Grid container spacing={2}>
+							<Grid item xs={12} sm={6}>
+								<TextField
+									autoComplete="given-name"
+									name="firstName"
+									required
+									fullWidth
+									id="firstName"
+									label="First Name"
+									autoFocus
+								/>
+							</Grid>
+							<Grid item xs={12} sm={6}>
+								<TextField
+									required
+									fullWidth
+									id="lastName"
+									label="Last Name"
+									name="lastName"
+									autoComplete="family-name"
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField
+									required
+									fullWidth
+									id="email"
+									label="Email Address"
+									name="email"
+									autoComplete="email"
+								/>
+							</Grid>
+							<Grid item xs={8}>
+								<TextField
+									required
+									fullWidth
+									name="password"
+									label="Password"
+									type="password"
+									id="password"
+									autoComplete="new-password"
+								/>
+							</Grid>
+						</Grid>
+						<Button
+							color= "inherit"
+							type="submit"
+							fullWidth
+							variant="contained"
+							sx={{ mt: 3, mb: 2 }}
+						>
+							Sign Up
+						</Button>
+						<Grid container justifyContent="flex-end">
+							<Grid item>
+								<Link href="#" variant="body2">
+									Already have an account? Sign in
+								</Link>
+							</Grid>
+						</Grid>
+					</Box>
+				</Box>
+			</Container>
+		</ThemeProvider>
 	)
 }
