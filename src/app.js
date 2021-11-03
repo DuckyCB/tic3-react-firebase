@@ -7,6 +7,7 @@ import * as ROUTES from './constants/routes'
 const Dashboard = lazy(() => import('./pages/dashboard'))
 const Login = lazy(() => import('./pages/login'))
 const Signup = lazy(() => import('./pages/signup'))
+const FullPost = lazy( () => import('./pages/fullpost'))
 const NotFound = lazy(() => import('./pages/notfound'))
 
 export default function App () {
@@ -18,6 +19,7 @@ export default function App () {
                         <Route exact path={ROUTES.DASHBOARD} component={Dashboard}/>
                         <Route path={ROUTES.LOGIN} component={Login}/>
                         <Route path={ROUTES.SIGNUP} component={Signup}/>
+                        <Route path={ROUTES.FULLPOST} component={FullPost}/>
                         <Route component={NotFound}/>
                         <Route path="/user">
                             <UserProfile/>
