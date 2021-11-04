@@ -16,7 +16,7 @@ export default function Dashboard() {
 		<>
 			<ThemeProvider theme={theme}>
 				<Navbar />
-				<Grid container spacing={2} justifyContent="center" alignItems="flex-start">
+				<Grid container spacing={2} justifyContent="left" alignItems="flex-start">
 					<Grid item xs={8}>
 						<Timeline />
 					</Grid>
