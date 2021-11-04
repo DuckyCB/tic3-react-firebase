@@ -5,7 +5,7 @@ import {Stack, Typography} from "@mui/material";
 import {doc, setDoc, Timestamp} from "firebase/firestore";
 const {db} = require("../lib/firebase");
 
-
+// TODO: Solo puede votar un USUARIO REGISTRADO que NO VOTO ANTES
 
 const VoteButtons = ({ post }) => {
     let upVotesCount = post.upVotesCount;
