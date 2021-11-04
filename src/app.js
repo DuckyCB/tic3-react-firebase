@@ -1,7 +1,9 @@
-import {lazy, Suspense} from "react";
+import {lazy, Suspense, useEffect,} from "react";
+import * as React from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import UserProfile from "./components/userprofile";
 import * as ROUTES from './constants/routes'
+import {createTheme, ThemeProvider} from "@mui/material";
 
 
 const Dashboard = lazy(() => import('./pages/dashboard'))
@@ -10,7 +12,33 @@ const Signup = lazy(() => import('./pages/signup'))
 const FullPost = lazy( () => import('./pages/fullpost'))
 const NotFound = lazy(() => import('./pages/notfound'))
 
-export default function App () {
+export const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+
+const getDesignTokens = (mode) => ({
+    palette: {
+        mode,
+        ...(mode === 'light'
+            ? {
+                orangebg: {
+                    main: '#ff9f00',
+                },
+                white: {
+                    main: '#ffffff'
+                },
+                tonalOffset: 0,
+            }
+            : {
+                orangebg: {
+                    main: '#ff9f00',
+                },
+                white: {
+                    main: '#ffffff'
+                },
+                tonalOffset: 0,
+            }),
+    },
+});
+function App () {
     return (
         <>
             <Router>
@@ -30,3 +58,27 @@ export default function App () {
         </>
     );
 }
+
+export default function ToggleColorMode() {
+    const [mode, setMode] = React.useState('dark');
+    const colorMode = React.useMemo(
+        () => ({
+            toggleColorMode: () => {
+                setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+            },
+        }),
+        [],
+    );
+
+    const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+
+    return (
+        <ColorModeContext.Provider value={colorMode}>
+            <ThemeProvider theme={theme}>
+                <App />
+            </ThemeProvider>
+        </ColorModeContext.Provider>
+    );
+}
+
+

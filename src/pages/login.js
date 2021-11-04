@@ -1,6 +1,7 @@
 import {useHistory, Link} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import FirebaseContext from "../context/firebase";
+import {login} from "../services/firebase";
 import * as ROUTES from "../constants/routes";
 import * as React from 'react';
 import Button from '@mui/material/Button';
@@ -15,7 +16,6 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import theme from "../components/theme";
 
 
 
@@ -31,13 +31,16 @@ export default function Login() {
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
+
 		try {
-			await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
-			history.push(ROUTES.DASHBOARD)
-		} catch (e) {
+			// await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
+			await login(emailAddress, password);
+			history.push(ROUTES.DASHBOARD);
+		} catch ({message}) {
 			setEmailAddress('');
 			setPassword('');
-			setError(e.message);
+			setError(message);
+			console.error(message);
 		}
 	};
 
@@ -47,7 +50,7 @@ export default function Login() {
 
 
 	return (
-		<ThemeProvider theme={theme}>
+		<>
 			<Grid container component="main" sx={{ height: '100vh' }}>
 				<CssBaseline />
 				<Grid
@@ -129,7 +132,7 @@ export default function Login() {
 					</Box>
 				</Grid>
 			</Grid>
-		</ThemeProvider>
+		</>
 		// <div>
 		// 	<div>
 		// 		titulo, imagen, o algo capaz?
