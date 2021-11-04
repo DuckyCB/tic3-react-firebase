@@ -1,6 +1,7 @@
 import {useHistory, Link} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import FirebaseContext from "../context/firebase";
+import {login} from "../services/firebase";
 import * as ROUTES from "../constants/routes";
 
 
@@ -16,13 +17,16 @@ export default function Login() {
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
+
 		try {
-			await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
-			history.push(ROUTES.MAIN)
-		} catch (e) {
+			// await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
+			await login(emailAddress, password);
+			history.push(ROUTES.DASHBOARD);
+		} catch ({message}) {
 			setEmailAddress('');
 			setPassword('');
-			setError(e.message);
+			setError(message);
+			console.error(message);
 		}
 	};
 

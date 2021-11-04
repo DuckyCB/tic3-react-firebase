@@ -2,7 +2,7 @@ import {Link, useHistory} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import FirebaseContext from "../context/firebase";
 import * as ROUTES from "../constants/routes";
-import {doesUsernameExist} from "../services/firebase";
+import {doesUsernameExist, signUp} from "../services/firebase";
 import Grid from "@mui/material/Grid";
 import theme from "../components/theme";
 import {ThemeProvider} from "@emotion/react";
@@ -18,8 +18,11 @@ export default function Signup() {
 	const history = useHistory();
 	const {firebase} = useContext(FirebaseContext)
 
-	const [username, setUsername] = useState('');
-	const [fullName, setFullName] = useState('');
+	// const [username, setUsername] = useState('');
+	// const [fullName, setFullName] = useState('');
+	const [firstName, setFirstName] = useState('');
+	const [lastName, setLastName] = useState('');
+
 	const [emailAddress, setEmailAddress] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -29,10 +32,13 @@ export default function Signup() {
 	const handleSignup = async (event) => {
 		event.preventDefault();
 
-		const usernameExists = await doesUsernameExist(username);
-		// try {
-		// } catch (e) {
-		// }
+		try {
+			const user = await signUp(emailAddress, password, firstName, lastName);
+			history.push(ROUTES.DASHBOARD);
+		} catch ({message, code}) {
+			setError(code);
+			console.error(message);
+		}
 	};
 
 	useEffect(() => {
@@ -69,6 +75,8 @@ export default function Signup() {
 									id="firstName"
 									label="First Name"
 									autoFocus
+									onChange={({target}) => setFirstName(target.value)}
+									value={firstName}
 								/>
 							</Grid>
 							<Grid item xs={12} sm={6}>
@@ -79,6 +87,8 @@ export default function Signup() {
 									label="Last Name"
 									name="lastName"
 									autoComplete="family-name"
+									onChange={({target}) => setLastName(target.value)}
+									value={lastName}
 								/>
 							</Grid>
 							<Grid item xs={12}>
@@ -89,6 +99,8 @@ export default function Signup() {
 									label="Email Address"
 									name="email"
 									autoComplete="email"
+									onChange={({target}) => setEmailAddress(target.value)}
+									value={emailAddress}
 								/>
 							</Grid>
 							<Grid item xs={8}>
@@ -100,6 +112,8 @@ export default function Signup() {
 									type="password"
 									id="password"
 									autoComplete="new-password"
+									onChange={({target}) => setPassword(target.value)}
+									value={password}
 								/>
 							</Grid>
 						</Grid>
