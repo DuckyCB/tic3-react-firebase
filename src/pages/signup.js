@@ -4,8 +4,6 @@ import FirebaseContext from "../context/firebase";
 import * as ROUTES from "../constants/routes";
 import {doesUsernameExist, signUp} from "../services/firebase";
 import Grid from "@mui/material/Grid";
-import theme from "../components/theme";
-import {ThemeProvider} from "@emotion/react";
 import {Container, CssBaseline, FormControlLabel, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
@@ -46,7 +44,7 @@ export default function Signup() {
 
 
 	return (
-		<ThemeProvider theme={theme}>
+		<>
 			<Container component="main" maxWidth="xs">
 				<CssBaseline />
 				<Box
@@ -135,6 +133,6 @@ export default function Signup() {
 					</Box>
 				</Box>
 			</Container>
-		</ThemeProvider>
+		</>
 	)
 }

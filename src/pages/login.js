@@ -16,7 +16,6 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import theme from "../components/theme";
 
 
 
@@ -51,7 +50,7 @@ export default function Login() {
 
 
 	return (
-		<ThemeProvider theme={theme}>
+		<>
 			<Grid container component="main" sx={{ height: '100vh' }}>
 				<CssBaseline />
 				<Grid
@@ -133,7 +132,7 @@ export default function Login() {
 					</Box>
 				</Grid>
 			</Grid>
-		</ThemeProvider>
+		</>
 		// <div>
 		// 	<div>
 		// 		titulo, imagen, o algo capaz?
