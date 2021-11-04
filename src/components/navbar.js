@@ -1,32 +1,3 @@
-// import './index.css';
-// import { ReactComponent as BellIcon } from './icons/bell.svg';
-// import { ReactComponent as MessengerIcon } from './icons/messenger.svg';
-// import { ReactComponent as CaretIcon } from './icons/caret.svg';
-// import { ReactComponent as PlusIcon } from './icons/plus.svg';
-// import { ReactComponent as CogIcon } from './icons/cog.svg';
-// import { ReactComponent as ChevronIcon } from './icons/chevron.svg';
-// import { ReactComponent as ArrowIcon } from './icons/arrow.svg';
-// import { ReactComponent as BoltIcon } from './icons/bolt.svg';
-//
-// import React, { useState, useEffect, useRef } from 'react';
-// import { CSSTransition } from 'react-transition-group';
-//
-// // TODO: ESTO SE VA
-// function App() {
-// 	return (
-// 		<Navbar>
-// 			<NavItem icon={<PlusIcon />} />
-// 			<NavItem icon={<BellIcon />} />
-// 			<NavItem icon={<MessengerIcon />} />
-//
-// 			<NavItem icon={<CaretIcon />}>
-// 				<DropdownMenu></DropdownMenu>
-// 			</NavItem>
-// 		</Navbar>
-// 	);
-// }
-//
-
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -49,27 +20,30 @@ import LoginIcon from '@mui/icons-material/Login';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {CardMedia} from "@mui/material";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import {ColorModeContext} from "../app";
 
 const drawerWidth = 240;
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-	({ theme, open }) => ({
-		flexGrow: 1,
-		padding: theme.spacing(3),
-		transition: theme.transitions.create('margin', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
-		marginRight: -drawerWidth,
-		...(open && {
-			transition: theme.transitions.create('margin', {
-				easing: theme.transitions.easing.easeOut,
-				duration: theme.transitions.duration.enteringScreen,
-			}),
-			marginRight: 0,
-		}),
-	}),
-);
+// const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+// 	({ theme, open }) => ({
+// 		flexGrow: 1,
+// 		padding: theme.spacing(3),
+// 		transition: theme.transitions.create('margin', {
+// 			easing: theme.transitions.easing.sharp,
+// 			duration: theme.transitions.duration.leavingScreen,
+// 		}),
+// 		marginRight: -drawerWidth,
+// 		...(open && {
+// 			transition: theme.transitions.create('margin', {
+// 				easing: theme.transitions.easing.easeOut,
+// 				duration: theme.transitions.duration.enteringScreen,
+// 			}),
+// 			marginRight: 0,
+// 		}),
+// 	}),
+// );
 
 const AppBar = styled(MuiAppBar, {
 	shouldForwardProp: (prop) => prop !== 'open',
@@ -100,7 +74,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawerRight() {
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);
-
 	const handleDrawerOpen = () => {
 		setOpen(true);
 	};
@@ -137,7 +110,6 @@ export default function PersistentDrawerRight() {
 		>
 			<MenuIcon />
 		</IconButton>
-
 	} else {
 		sidebar =
 		<List>
@@ -171,6 +143,7 @@ export default function PersistentDrawerRight() {
 			/>
 		</IconButton>
 	}
+
 	return (
 		<Box height={87} sx={{ display: 'flex' }}>
 			<CssBaseline />
@@ -181,6 +154,13 @@ export default function PersistentDrawerRight() {
 					</a>
 					<Typography sx={{ flexGrow: 1 }} component="div">
 					</Typography>
+					<ColorModeContext.Consumer>
+						{colorMode => (
+							<IconButton onClick={colorMode.toggleColorMode} color="inherit">
+								{theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+							</IconButton>
+                        )}
+					</ColorModeContext.Consumer>
 					{menuOpener}
 				</Toolbar>
 			</AppBar>
