@@ -7,19 +7,22 @@ import {db} from "../lib/firebase";
 export default function Timeline() {
 	const [posts, setPosts] = useState([]);
 
-	useEffect(  async () => {
-		const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
-		onSnapshot(q,(querySnapshot) => {
-			const _posts = [];
-			querySnapshot.forEach((doc) => {
-				_posts.push({
-					id: doc.id,
-					...doc.data(),
-				});
+	useEffect(() => {
+		async function getPosts() {
+			const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+			onSnapshot(q, (querySnapshot) => {
+				const _posts = [];
+				querySnapshot.forEach((doc) => {
+					_posts.push({
+						id: doc.id,
+						...doc.data(),
+					});
 
+				});
+				setPosts(_posts);
 			});
-			setPosts(_posts);
-		});
+		}
+		getPosts();
 	},[]);
 
 	return (
