@@ -17,7 +17,6 @@ export default function FullPost() {
         try {
             const docRef = doc(db, 'posts', `${postid}`);
             const _post = await getDoc(docRef);
-            console.log(_post.data());
             setPost(_post.data());
         } catch (err) {
             console.error(err);
@@ -31,7 +30,7 @@ export default function FullPost() {
     return (
         <>
             <Navbar />
-            {post !== undefined ? <Post post={post} key={post.id}/> : <p>Loading...</p>}
+            {post !== undefined ? <Post post={post} fullRender="true" key={post.id}/> : <p>Loading...</p>}
             {/*<Comments post={post}/>*/}
         </>
     )
