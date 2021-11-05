@@ -4,17 +4,23 @@ import VoteButtons from "./vote-buttons";
 import Avatar from "@mui/material/Avatar";
 import {red} from "@mui/material/colors";
 import * as ROUTES from "../constants/routes";
+import {Link} from "react-router-dom";
 
 const Post = ({post}) => {
 
-    useEffect(() => {
-        async function getPosts() {
-            // TODO: Pide el post asociado al comentario para printearlo
-            // Capaz no es necesario pedirlo aca, sino obtenerlo al momento de cargar el post
-            // y heredarlo a este componente
-        }
-        getPosts();
-    },[]);
+    // useEffect(() => {
+    //     async function getPosts() {
+    //         // TODO: Pide el subkinchoo asociado al post para printearlo
+    //         // Capaz no es necesario pedirlo aca, sino obtenerlo al momento de cargar el post
+    //         // y heredarlo a este componente
+    //     }
+    //     getPosts();
+    // },[]);
+
+    let user;
+    if (post.user) {
+        user = `Posted by ${post.user.name}`
+    }
 
     let img;
     if (post.imgURL) {
@@ -28,17 +34,14 @@ const Post = ({post}) => {
        <Card key={post.id} sx={{ width: 6/10 }}>
            <CardHeader
                avatar={
-                   <Avatar sx={{bgcolor: red[500]}} aria-label="recipe">
-                       {/* TODO: Aca va la foto del subKinchoo */}
-                       R
-                   </Avatar>
+                   <Avatar sx={{bgcolor: red[500]}} aria-label="recipe" src={post.subKinchoo.avatar}/>
                }
                // TODO: Aca va el titulo del subKinchoo
-               title='SubKinchoo name'
+               title={post.subKinchoo.name}
                // TODO: Aca va el que posteo el post
-               subheader='Posted by MAD MAX'
+               subheader={user}
            />
-           <CardActionArea href={`${ROUTES.FULLPOST}${post.id}`}>
+           <CardActionArea component={Link} to={`/p/${post.id}`}>
                <CardContent>
                    <Typography variant="h6" display="block" gutterBottom>
                        {post.title}
