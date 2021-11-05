@@ -44,14 +44,14 @@ const Post = ({post}) => {
                subheader={user}
            />
            <CardActionArea component={Link} to={`/p/${post.id}`}>
-               <CardContent>
+               <CardContent sx={{ maxHeight: 250, textOverflow: 'ellipsis'}} >
                    <Typography variant="h6" display="block" gutterBottom>
                        {post.title}
                    </Typography>
+                   {img}
                    <Typography align={"justify"} >
                        {post.content}
                    </Typography>
-                   {img}
                </CardContent>
            </CardActionArea>
            <CardActions>
