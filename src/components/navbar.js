@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Link} from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -23,6 +24,7 @@ import {CardMedia} from "@mui/material";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import {ColorModeContext} from "../app";
+import * as ROUTES from "../constants/routes";
 
 const drawerWidth = 240;
 
@@ -149,9 +151,9 @@ export default function PersistentDrawerRight() {
 			<CssBaseline />
 			<AppBar enableColorOnDark color="orangebg" sx={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0))'}} position="fixed" open={open}>
 				<Toolbar>
-					<a href="https://www.reddit.com/">
-						<img src="kinchoo.png" style={{margin:10}} height={60} alt="Kinchoo"/>
-					</a>
+					<Link to={ROUTES.DASHBOARD}>
+						<img src="../../kinchoo.png" style={{margin:10}} height={60} alt="Kinchoo"/>
+					</Link>
 					<Typography sx={{ flexGrow: 1 }} component="div">
 					</Typography>
 					<ColorModeContext.Consumer>

@@ -17,6 +17,8 @@ const Post = ({post}) => {
     //     getPosts();
     // },[]);
 
+    console.log(post);
+
     let user;
     if (post.user) {
         user = `Posted by ${post.user.name}`
@@ -33,9 +35,9 @@ const Post = ({post}) => {
    return (
        <Card key={post.id} sx={{ width: 6/10 }}>
            <CardHeader
-               avatar={
-                   <Avatar sx={{bgcolor: red[500]}} aria-label="recipe" src={post.subKinchoo.avatar}/>
-               }
+            //    avatar={
+            //        <Avatar sx={{bgcolor: red[500]}} aria-label="recipe" src={post.subKinchoo.avatar}/>
+            //    }
                // TODO: Aca va el titulo del subKinchoo
                title={post.subKinchoo.name}
                // TODO: Aca va el que posteo el post
