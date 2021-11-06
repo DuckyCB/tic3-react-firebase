@@ -1,29 +1,28 @@
-import {ButtonBase, Paper, Stack, TextField} from "@mui/material";
+import {Card, CardContent, CardHeader, Paper, Stack, TextField, Typography} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import React, {useEffect, useState} from "react";
 import styled from "@emotion/styled";
 
 
-
-function Comment(props: { post: * }) {
-
+function Comment({comment}) {
     const Img = styled('img')({
         margin: 'auto',
         display: 'block',
         maxWidth: '100%',
         maxHeight: '100%',
     });
-
     return (
-        <Paper>
-            <Grid container spacing={2}>
-                <Grid item>
-                    <ButtonBase sx={{ width: 128, height: 128 }}>
-                        <Img alt="complex" src="/../../public/logo192.png" />
-                    </ButtonBase>
-                </Grid>
-            </Grid>
-        </Paper>
+        <Card sx={{ width: 8/10 }}>
+            <CardHeader
+                title={comment.postedBy}
+                subheader="Fecha"
+            />
+            <CardContent>
+                <Typography variant="body2" color="text.secondary">
+                    {comment.content}
+                </Typography>
+            </CardContent>
+        </Card>
     );
 }
 
@@ -32,22 +31,25 @@ export default function Comments({post}) {
 
     useEffect(() => {
         async function getComments() {
-            // TODO: Pedir comentarios
-            console.log('Falta recibir los comentarios');
-            const _comments = {};
-            setComments(_comments);
+            // TODO: obtener los comentarios del post, que tiene una subcollection de comentarios
+            const hardcodedComments = [
+                {'content': 'contenido 1', 'postedBy': 'ducky'},
+                {'content': 'contenido 2', 'postedBy': 'kinchu'}
+            ];
+            setComments(hardcodedComments)
         }
         getComments();
-    },[]);
+
+        console.log(comments)
+    },[comments]);
 
     return (
-        <div>
-            <Stack spacing={4} justifyContent="center" alignItems="center">
-                {comments.map((comment) => (
-                    <Comment post={comment} key={comment.id} />
-                ))}
+        <Paper sx={{ width: 6/10 }}>
+            <Stack spacing={4} justifyContent="center" alignItems="center" sx={{ width: 6/10 }}>
+                {comments.map((comment) =>
+                    <Comment comment={comment}/>
+                )}
             </Stack>
-            <TextField id="outlined-basic" label="New comment" variant="outlined" />
-        </div>
+        </Paper>
     )
 }

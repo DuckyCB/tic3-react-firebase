@@ -31,14 +31,12 @@ const Post = ({post, fullRender}) => {
                    <Avatar sx={{bgcolor: red[500]}} aria-label="recipe" src={post.subKinchoo.avatar}/>
                }
                title={
-                   // TODO: Poner bien el color de esto
-                   <Link component={RouterLink} to={`/r/${post.subKinchoo.subname}`} style={{textDecoration: 'none'}}>
+                   <Link component={RouterLink} to={`/r/${post.subKinchoo.subname}`} sx={{ textDecoration: 'none', color: 'text.primary' }}>
                        {post.subKinchoo.subname}
                    </Link>
                }
                subheader={
-                   // TODO: Poner bien el color de esto
-                   <Link component={RouterLink} to={`/u/${post.user.username}`} style={{textDecoration: 'none'}}>
+                   <Link component={RouterLink} to={`/u/${post.user.username}`} sx={{ textDecoration: 'none', color: 'text.secondary' }}>
                        {user}
                    </Link>
                }

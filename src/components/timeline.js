@@ -1,5 +1,5 @@
 import Post from "./post";
-import {Stack} from "@mui/material";
+import {Skeleton, Stack} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import {collection, onSnapshot, orderBy, query} from "firebase/firestore";
 import {db} from "../lib/firebase";
