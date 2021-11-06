@@ -2,9 +2,9 @@ import {Link, useHistory} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import FirebaseContext from "../context/firebase";
 import * as ROUTES from "../constants/routes";
-import {doesUsernameExist, signUp} from "../services/firebase";
+import {signUp} from "../services/firebase";
 import Grid from "@mui/material/Grid";
-import {Container, CssBaseline, FormControlLabel, TextField} from "@mui/material";
+import {Container, CssBaseline, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
@@ -64,63 +64,31 @@ export default function SignUp() {
 					<Box component="form" noValidate onSubmit={handleSignup} sx={{ mt: 3 }}>
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={6}>
-								<TextField
-									autoComplete="given-name"
-									name="firstName"
-									required
-									fullWidth
-									id="firstName"
-									label="First Name"
-									autoFocus
+								<TextField autoComplete="given-name" name="firstName" required fullWidth id="firstName"
+									label="First Name" autoFocus value={firstName}
 									onChange={({target}) => setFirstName(target.value)}
-									value={firstName}
 								/>
 							</Grid>
 							<Grid item xs={12} sm={6}>
-								<TextField
-									required
-									fullWidth
-									id="lastName"
-									label="Last Name"
-									name="lastName"
-									autoComplete="family-name"
+								<TextField required fullWidth id="lastName" label="Last Name" name="lastName"
+										   autoComplete="family-name" value={lastName}
 									onChange={({target}) => setLastName(target.value)}
-									value={lastName}
 								/>
 							</Grid>
 							<Grid item xs={12}>
-								<TextField
-									required
-									fullWidth
-									id="email"
-									label="Email Address"
-									name="email"
-									autoComplete="email"
+								<TextField required fullWidth id="email" label="Email Address" name="email"
+									autoComplete="email" value={emailAddress}
 									onChange={({target}) => setEmailAddress(target.value)}
-									value={emailAddress}
 								/>
 							</Grid>
 							<Grid item xs={8}>
-								<TextField
-									required
-									fullWidth
-									name="password"
-									label="Password"
-									type="password"
-									id="password"
-									autoComplete="new-password"
+								<TextField required fullWidth name="password" label="Password" type="password"
+									id="password" autoComplete="new-password" value={password}
 									onChange={({target}) => setPassword(target.value)}
-									value={password}
 								/>
 							</Grid>
 						</Grid>
-						<Button
-							color= "inherit"
-							type="submit"
-							fullWidth
-							variant="contained"
-							sx={{ mt: 3, mb: 2 }}
-						>
+						<Button color= "inherit" type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
 							Sign Up
 						</Button>
 						<Grid container justifyContent="flex-end">

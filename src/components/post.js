@@ -15,11 +15,7 @@ const Post = ({post, fullRender}) => {
 
     let img;
     if (post.imgURL) {
-        img = <CardMedia
-            component="img"
-            alt="Image not fetched"
-            image={post.imgURL}
-        />
+        img = <CardMedia component="img" alt="Image not fetched" image={post.imgURL}/>
     }
     const styleUser = {
 
