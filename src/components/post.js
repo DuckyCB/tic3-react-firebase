@@ -1,9 +1,8 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Link, Typography} from "@mui/material";
 import VoteButtons from "./vote-buttons";
 import Avatar from "@mui/material/Avatar";
 import {red} from "@mui/material/colors";
-import * as ROUTES from "../constants/routes";
 import {Link as RouterLink} from "react-router-dom";
 
 export function formatDate(dateFS){

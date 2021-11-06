@@ -1,48 +1,83 @@
 import Navbar from "../components/navbar";
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {collection, getDocs, query, where} from "firebase/firestore";
+import {collection, query, where, onSnapshot} from "firebase/firestore";
 import {db} from "../lib/firebase";
-import {Grid} from "@mui/material";
+import {Card, CardContent, CardHeader, Grid, Stack} from "@mui/material";
 import Timeline from "../components/timeline";
 import Sidebar from "../components/sidebar";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
+import {red} from "@mui/material/colors";
 
 export default function SubKinchoo() {
-	const [subKinchoo, setSubKinchoo] = useState(undefined);
+	const [subKinchoo, setSubKinchoo] = useState([]);
 	const { subname } = useParams();
 
 	useEffect(() => {
 		async function fetchSubKinchooData() {
 			try {
 				const subKinchooQuery = query(collection(db, 'subkinchoo'), where('subname', '==', subname));
-				const subKinchooResult = await getDocs(subKinchooQuery);
-				const subKinchooArr = subKinchooResult.docs.map(user => user.data());
-				if (subKinchooResult.docs.length === 0) {
-					console.error('subKinchoo not found');
-					return;
-				}
-				setSubKinchoo(subKinchooArr[0]);
+				// const subKinchooResult = await getDocs(subKinchooQuery);
+				// const subKinchooArr = subKinchooResult.docs.map((sub) =>({id: sub.id, ...sub.data()}));
+				onSnapshot(subKinchooQuery, (querySnapshot) => {
+					const _subKinchoos = [];
+					querySnapshot.forEach((doc) => {
+						_subKinchoos.push({
+							id: doc.id,
+							...doc.data(),
+						});
+					});
+					setSubKinchoo(_subKinchoos[0]);
+				})
+
+				// if (subKinchooResult.docs.length === 0) {
+				// 	console.error('SubKinchoo not found');
+				// 	return;
+				// }
+				// if (subKinchooResult.docs.length >= 2) {
+				// 	console.error('Error: matching subkinchoo names');
+				// 	return;
+				// }
 			} catch (e) {
 				console.error(e.message);
 			}
 		}
 		fetchSubKinchooData();
-		document.title = subKinchoo ? `r/${subKinchoo.subname}` : 'r/';
-
 	}, []);
+	document.title = subKinchoo ? `r/${subKinchoo.subname}` : 'r/';
 
 	return (
 		<>
 			<Navbar/>
 			<Grid container spacing={2} justifyContent="center" alignItems="flex-start">
 				<Grid item xs={8}>
+					<Stack spacing={4} justifyContent="center" mb={5} mt={2} alignItems="center">
+						<Card sx={{width: 6/10}}>
+							<CardHeader
+								title={
+									<Typography variant="h5"  gutterBottom>
+										{subKinchoo.name}
+									</Typography>
+								}
+								avatar={
+									<Avatar sx={{bgcolor: red[500], height: 70, width: 70}} aria-label="recipe"
+											src={subKinchoo.avatar}/>
+								}
+							/>
+							<CardContent>
+								<Typography>
+									{subKinchoo.description}
+								</Typography>
+							</CardContent>
+						</Card>
+					</Stack>
 					<Timeline />
 				</Grid>
 				<Grid item xs={4}>
-					<Sidebar subKinchoo={subKinchoo} />
+					<Sidebar subKinchoo={subKinchoo}/>
 				</Grid>
 			</Grid>
-			SUB KINCHOO
 		</>
 	)
 }

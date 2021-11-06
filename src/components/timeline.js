@@ -1,5 +1,5 @@
 import Post from "./post";
-import {Skeleton, Stack} from "@mui/material";
+import {Stack} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import {collection, onSnapshot, orderBy, query} from "firebase/firestore";
 import {db} from "../lib/firebase";
@@ -17,10 +17,8 @@ export default function Timeline() {
 						id: doc.id,
 						...doc.data(),
 					});
-
 				});
 				setPosts(_posts);
-
 			});
 		}
 		getPosts();
@@ -28,7 +26,7 @@ export default function Timeline() {
 
 	return (
 		<div>
-			<Stack spacing={4} justifyContent="center" alignItems="center">
+			<Stack spacing={4} justifyContent="center" mb={5} mt={2} alignItems="center">
 				{posts.map((post) => (
 					<Post post={post} />
 				))}

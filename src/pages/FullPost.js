@@ -3,7 +3,7 @@ import Navbar from "../components/navbar";
 import Post from "../components/post";
 import Comments from "../components/comments";
 import {useParams} from "react-router-dom";
-import {doc, getDoc, onSnapshot} from "firebase/firestore";
+import {doc, onSnapshot} from "firebase/firestore";
 import {db} from "../lib/firebase";
 import {Skeleton, Stack} from "@mui/material";
 

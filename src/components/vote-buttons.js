@@ -2,7 +2,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import IconButton from '@mui/material/IconButton';
 import {Stack, Typography} from "@mui/material";
-import {doc, setDoc, Timestamp, writeBatch} from "firebase/firestore";
+import {doc, Timestamp, writeBatch} from "firebase/firestore";
 const {db} = require("../lib/firebase");
 
 // TODO: Solo puede votar un USUARIO REGISTRADO que NO VOTO ANTES

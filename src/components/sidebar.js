@@ -1,6 +1,7 @@
 import {Container, Stack} from "@mui/material";
 import styled from "@emotion/styled";
 import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
 
 const Item = styled(Paper)(({ theme }) => ({
 	...theme.typography.body2,
@@ -12,18 +13,24 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function Sidebar(subKinchoo) {
-
-	if (subKinchoo) {
-		// console.log(subKinchoo)
-		// console.log('messis')
+	let addNewPost
+	let sub = subKinchoo.subKinchoo
+	if (sub) {
+		addNewPost =
+			<Button sx={{width: 200}} variant="contained" onClick={() => {
+			}}>
+				Add New Post
+			</Button>
 	}
+
 	return (
 		<Container fixed>
 				Top Kinchoos
-			<Stack spacing={1} >
-				<Item>Quincke </Item>
+			<Stack spacing={1}>
+				<Item>Quincke</Item>
 				<Item>Item 2</Item>
 				<Item>Item 3</Item>
+				{addNewPost}
 			</Stack>
 		</Container>
 	)
