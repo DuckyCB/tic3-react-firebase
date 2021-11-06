@@ -23,7 +23,7 @@ export default function FullPost() {
             console.error(err);
         }
 
-        document.title = 'p/{post.title}';
+        document.title = `p/${post.title}`;
 
     }, []);
 

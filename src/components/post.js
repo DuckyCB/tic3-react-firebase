@@ -43,7 +43,7 @@ const Post = ({post, fullRender}) => {
                    </Link>
                }
            />
-           <CardActionArea component={Link} to={`/p/${post.id}`}>
+           <CardActionArea sx={fullRender ? {disabled: true} : {}} component={RouterLink} to={`/p/${post.id}`}>
                <CardContent>
                    <Typography variant="h6" display="block" gutterBottom>
                        {post.title}

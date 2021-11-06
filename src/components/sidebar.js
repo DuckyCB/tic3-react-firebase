@@ -1,9 +1,6 @@
 import {Container, Stack} from "@mui/material";
-import * as PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import Paper from "@mui/material/Paper";
-import ChildCareIcon from '@mui/icons-material/ChildCare';
-import {blue, orange} from "@mui/material/colors";
 
 const Item = styled(Paper)(({ theme }) => ({
 	...theme.typography.body2,
