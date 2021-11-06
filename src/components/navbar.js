@@ -94,11 +94,11 @@ export default function PersistentDrawerRight() {
 					</ListItemIcon>
 					<ListItemText primary={'Login'} />
 				</ListItem>
-				<ListItem button key={'Signup'}>
+				<ListItem button key={'SignUp'}>
 					<ListItemIcon>
 	                    <SaveAltIcon />
 					</ListItemIcon>
-					<ListItemText primary={"Signup"} />
+					<ListItemText primary={"SignUp"} />
 				</ListItem>
 
 				<Divider />

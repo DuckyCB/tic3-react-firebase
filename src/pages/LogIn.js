@@ -19,7 +19,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
 
-export default function Login() {
+export default function LogIn() {
 	const history = useHistory();
 	const {firebase} = useContext(FirebaseContext)
 

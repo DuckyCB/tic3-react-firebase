@@ -1,25 +1,16 @@
 import React, {useEffect} from "react";
-import {Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Typography} from "@mui/material";
+import {Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Link, Typography} from "@mui/material";
 import VoteButtons from "./vote-buttons";
 import Avatar from "@mui/material/Avatar";
 import {red} from "@mui/material/colors";
 import * as ROUTES from "../constants/routes";
-import {Link} from "react-router-dom";
+import {Link as RouterLink} from "react-router-dom";
 
 const Post = ({post, fullRender}) => {
 
-    // useEffect(() => {
-    //     async function getPosts() {
-    //         // TODO: Pide el subkinchoo asociado al post para printearlo
-    //         // Capaz no es necesario pedirlo aca, sino obtenerlo al momento de cargar el post
-    //         // y heredarlo a este componente
-    //     }
-    //     getPosts();
-    // },[]);
-
     let user;
     if (post.user) {
-        user = `Posted by ${post.user.name}`
+        user = `Posted by ${post.user.username}`
     }
 
     let img;
@@ -30,16 +21,27 @@ const Post = ({post, fullRender}) => {
             image={post.imgURL}
         />
     }
+    const styleUser = {
+
+    }
    return (
        <Card key={post.id} sx={{ width: 6/10 }}>
            <CardHeader
-            //    avatar={
-            //        <Avatar sx={{bgcolor: red[500]}} aria-label="recipe" src={post.subKinchoo.avatar}/>
-            //    }
-               // TODO: Aca va el titulo del subKinchoo
-               title={post.subKinchoo.name}
-               // TODO: Aca va el que posteo el post
-               subheader={user}
+               avatar={
+                   <Avatar sx={{bgcolor: red[500]}} aria-label="recipe" src={post.subKinchoo.avatar}/>
+               }
+               title={
+                   // TODO: Poner bien el color de esto
+                   <Link component={RouterLink} to={`/r/${post.subKinchoo.subname}`} style={{textDecoration: 'none'}}>
+                       {post.subKinchoo.subname}
+                   </Link>
+               }
+               subheader={
+                   // TODO: Poner bien el color de esto
+                   <Link component={RouterLink} to={`/u/${post.user.username}`} style={{textDecoration: 'none'}}>
+                       {user}
+                   </Link>
+               }
            />
            <CardActionArea component={Link} to={`/p/${post.id}`}>
                <CardContent>
