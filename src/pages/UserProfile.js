@@ -15,18 +15,17 @@ export default function UserProfile() {
 		try {
 		    const userQuery = query(collection(db, 'users'), where('username', '==', username));
 		    const userResult = await getDocs(userQuery);
+            const userArr = userResult.docs.map(user => user.data());
 			if (userResult.docs.lenght === 0 ) {
-				throw new Error('user not found');
+                console.error('user not found');
+                return;
 			}
-			console.log(userResult.docs)
-			result = userResult.docs[0];
-			setUser(result)
+			setUser(userArr[0]);
 		} catch (e) {
 		    console.error(e.message);
 		}
-		console.log(user)
 
-		document.title = `u/${user.username}`;
+		document.title = user ? `u/${user.username}` : 'u/';
 
 	}, []);
 
@@ -34,7 +33,9 @@ export default function UserProfile() {
 		<>
 			<Navbar/>
 			USER PROFILE
-			{user?.username}
+            <p>
+			{user ? JSON.stringify(user) : 'Loading user...'}
+            </p>
 		</>
 	)
 }
