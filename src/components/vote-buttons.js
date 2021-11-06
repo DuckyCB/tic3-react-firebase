@@ -2,7 +2,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import IconButton from '@mui/material/IconButton';
 import {Stack, Typography} from "@mui/material";
-import {doc, setDoc, Timestamp} from "firebase/firestore";
+import {doc, setDoc, Timestamp, writeBatch} from "firebase/firestore";
 const {db} = require("../lib/firebase");
 
 // TODO: Solo puede votar un USUARIO REGISTRADO que NO VOTO ANTES
@@ -22,16 +22,12 @@ const VoteButtons = ({ post }) => {
         } else {
             downVotesCount++;
         }
-
-        await setDoc(doc(db,"posts", post.id), {
-            title: post.title,
-            upVotesCount: upVotesCount,
+        const batch = writeBatch(db);
+        const postRef = doc(db, "posts", post.id);
+        batch.update(postRef, {upVotesCount: upVotesCount,
             downVotesCount: downVotesCount,
-            imgURL: post.imgURL,
-            content: post.content,
-            createdAt: post.createdAt,
-            updatedAt: Timestamp.fromDate(date)
-        })
+            updatedAt: Timestamp.fromDate(date)});
+        await batch.commit()
     };
 return (
     <>

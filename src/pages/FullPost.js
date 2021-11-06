@@ -3,7 +3,7 @@ import Navbar from "../components/navbar";
 import Post from "../components/post";
 import Comments from "../components/comments";
 import {useParams} from "react-router-dom";
-import {doc, getDoc} from "firebase/firestore";
+import {doc, getDoc, onSnapshot} from "firebase/firestore";
 import {db} from "../lib/firebase";
 import {Skeleton, Stack} from "@mui/material";
 
@@ -17,8 +17,9 @@ export default function FullPost() {
         async function fetchPost() {
             try {
                 const docRef = doc(db, 'posts', `${postid}`);
-                const _post = await getDoc(docRef);
-                setPost(_post.data());
+                onSnapshot(docRef, (snapshot) => {
+                    setPost({id: snapshot.id, ...snapshot.data()});
+                });
                 document.title = post ? `p/${post.title}` : 'p/';
             } catch (err) {
                 console.error(err);

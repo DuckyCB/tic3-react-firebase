@@ -20,6 +20,7 @@ export default function Timeline() {
 
 				});
 				setPosts(_posts);
+
 			});
 		}
 		getPosts();
@@ -29,7 +30,7 @@ export default function Timeline() {
 		<div>
 			<Stack spacing={4} justifyContent="center" alignItems="center">
 				{posts.map((post) => (
-					<Post post={post} key={post.id} />
+					<Post post={post} />
 				))}
 			</Stack>
 		</div>

@@ -16,7 +16,7 @@ export default function UserProfile() {
 				const userQuery = query(collection(db, 'users'), where('username', '==', username));
 				const userResult = await getDocs(userQuery);
 				const userArr = userResult.docs.map(user => user.data());
-				if (userResult.docs.lenght === 0) {
+				if (userResult.docs.length === 0) {
 					console.error('user not found');
 					return;
 				}

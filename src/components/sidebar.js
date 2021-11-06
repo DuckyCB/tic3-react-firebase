@@ -11,7 +11,12 @@ const Item = styled(Paper)(({ theme }) => ({
 	width: theme.spacing(25)
 }));
 
-export default function Sidebar() {
+export default function Sidebar(subKinchoo) {
+
+	if (subKinchoo) {
+		// console.log(subKinchoo)
+		// console.log('messis')
+	}
 	return (
 		<Container fixed>
 				Top Kinchoos

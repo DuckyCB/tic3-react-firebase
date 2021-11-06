@@ -9,7 +9,6 @@ import Sidebar from "../components/sidebar";
 
 export default function SubKinchoo() {
 	const [subKinchoo, setSubKinchoo] = useState(undefined);
-	const [posts, setPosts] = useState([]);
 	const { subname } = useParams();
 
 	useEffect(() => {
@@ -18,7 +17,7 @@ export default function SubKinchoo() {
 				const subKinchooQuery = query(collection(db, 'subkinchoo'), where('subname', '==', subname));
 				const subKinchooResult = await getDocs(subKinchooQuery);
 				const subKinchooArr = subKinchooResult.docs.map(user => user.data());
-				if (subKinchooResult.docs.lenght === 0) {
+				if (subKinchooResult.docs.length === 0) {
 					console.error('subKinchoo not found');
 					return;
 				}
@@ -40,7 +39,7 @@ export default function SubKinchoo() {
 					<Timeline />
 				</Grid>
 				<Grid item xs={4}>
-					<Sidebar />
+					<Sidebar subKinchoo={subKinchoo} />
 				</Grid>
 			</Grid>
 			SUB KINCHOO

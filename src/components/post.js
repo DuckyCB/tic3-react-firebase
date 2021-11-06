@@ -6,8 +6,15 @@ import {red} from "@mui/material/colors";
 import * as ROUTES from "../constants/routes";
 import {Link as RouterLink} from "react-router-dom";
 
-const Post = ({post, fullRender}) => {
+export function formatDate(dateFS){
+    const dateJS = dateFS.toDate();
+    const month = dateJS.getUTCMonth() + 1; //months from 1-12
+    const day = dateJS.getUTCDate();
+    const year = dateJS.getUTCFullYear();
+    return day + "/" + month + "/" + year;
+}
 
+const Post = ({post, fullRender}) => {
     let user;
     if (post.user) {
         user = `Posted by ${post.user.username}`
@@ -17,6 +24,9 @@ const Post = ({post, fullRender}) => {
     if (post.imgURL) {
         img = <CardMedia component="img" alt="Image not fetched" image={post.imgURL}/>
     }
+    const date = formatDate(post.createdAt)
+
+
     const styleUser = {
 
     }
@@ -51,7 +61,7 @@ const Post = ({post, fullRender}) => {
            <CardActions>
                <VoteButtons post = {post}/>
                <Typography align={"right"} >
-                   {post.createdAt.toDate().toString()}
+                   Posted: {date}
                </Typography>
            </CardActions>
        </Card>
