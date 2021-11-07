@@ -1,8 +1,9 @@
 import Navbar from "../components/navbar";
 import React, {useEffect} from "react";
 import Timeline from "../components/timeline";
-import Sidebar from "../components/sidebar";
 import {Grid} from "@mui/material";
+import TopSubKinchoos from "../components/sidebar/TopSubKinchoos";
+import AboutUs from "../components/sidebar/AboutUs";
 
 export default function Dashboard() {
 
@@ -18,7 +19,8 @@ export default function Dashboard() {
 					<Timeline />
 				</Grid>
 				<Grid item xs={4}>
-					<Sidebar />
+					<TopSubKinchoos/>
+					<AboutUs/>
 				</Grid>
 			</Grid>
 		</>

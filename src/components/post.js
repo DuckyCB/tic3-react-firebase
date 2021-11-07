@@ -16,7 +16,7 @@ export function formatDate(dateFS){
 const Post = ({post, fullRender}) => {
     let user;
     if (post.user) {
-        user = `Posted by ${post.user.username}`
+        user = `Posted by u/${post.user.username}`
     }
 
     let img;
@@ -37,7 +37,7 @@ const Post = ({post, fullRender}) => {
                }
                title={
                    <Link component={RouterLink} to={`/r/${post.subKinchoo.subname}`} sx={{ textDecoration: 'none', color: 'text.primary' }}>
-                       {post.subKinchoo.subname}
+                       r/{post.subKinchoo.subname}
                    </Link>
                }
                subheader={

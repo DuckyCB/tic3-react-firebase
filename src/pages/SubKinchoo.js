@@ -9,6 +9,8 @@ import Sidebar from "../components/sidebar";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import {red} from "@mui/material/colors";
+import SubKinchooInfo from "../components/sidebar/subKinchooInfo";
+import AddNewPost from "../components/sidebar/AddNewPost";
 
 export default function SubKinchoo() {
 	const [subKinchoo, setSubKinchoo] = useState([]);
@@ -47,30 +49,15 @@ export default function SubKinchoo() {
 			<Navbar/>
 			<Grid container spacing={2} justifyContent="center" alignItems="flex-start">
 				<Grid item xs={8}>
-					<Stack spacing={4} justifyContent="center" mb={5} mt={2} alignItems="center">
-						<Card sx={{width: 6/10}}>
-							<CardHeader
-								title={
-									<Typography variant="h5"  gutterBottom>
-										{subKinchoo.name}
-									</Typography>
-								}
-								avatar={
-									<Avatar sx={{bgcolor: red[500], height: 70, width: 70}} aria-label="recipe"
-											src={subKinchoo.avatar}/>
-								}
-							/>
-							<CardContent>
-								<Typography>
-									{subKinchoo.description}
-								</Typography>
-							</CardContent>
-						</Card>
+					<Stack spacing={4} justifyContent="center" mb={5} mt={2} alignItems="right">
 					</Stack>
 					<Timeline subKinchoo={subKinchoo}/>
 				</Grid>
 				<Grid item xs={4}>
-					<Sidebar subKinchoo={subKinchoo}/>
+					<Stack spacing={4} justifyContent="center" mb={5} mt={2} alignItems="left">
+						<SubKinchooInfo subKinchoo={subKinchoo}/>
+						<AddNewPost subKinchoo={subKinchoo}/>
+					</Stack>
 				</Grid>
 			</Grid>
 		</>
