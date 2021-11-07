@@ -17,28 +17,23 @@ export default function SubKinchoo() {
 	useEffect(() => {
 		async function fetchSubKinchooData() {
 			try {
-				const subKinchooQuery = query(collection(db, 'subkinchoo'), where('subname', '==', subname));
-				// const subKinchooResult = await getDocs(subKinchooQuery);
-				// const subKinchooArr = subKinchooResult.docs.map((sub) =>({id: sub.id, ...sub.data()}));
-				onSnapshot(subKinchooQuery, (querySnapshot) => {
-					const _subKinchoos = [];
-					querySnapshot.forEach((doc) => {
-						_subKinchoos.push({
-							id: doc.id,
-							...doc.data(),
+				new Promise((resolve) => {
+					const subKinchooQuery = query(collection(db, 'subkinchoo'), where('subname', '==', subname));
+					onSnapshot(subKinchooQuery, (querySnapshot) => {
+						const _subKinchoos = [];
+						querySnapshot.forEach((doc) => {
+							_subKinchoos.push({
+								id: doc.id,
+								...doc.data(),
+							});
+							resolve(_subKinchoos);
 						});
-					});
-					setSubKinchoo(_subKinchoos[0]);
+					})
+				}).then((subKinchoos) => {
+					setSubKinchoo(subKinchoos[0]);
 				})
 
-				// if (subKinchooResult.docs.length === 0) {
-				// 	console.error('SubKinchoo not found');
-				// 	return;
-				// }
-				// if (subKinchooResult.docs.length >= 2) {
-				// 	console.error('Error: matching subkinchoo names');
-				// 	return;
-				// }
+
 			} catch (e) {
 				console.error(e.message);
 			}
@@ -72,7 +67,7 @@ export default function SubKinchoo() {
 							</CardContent>
 						</Card>
 					</Stack>
-					<Timeline />
+					<Timeline subKinchoo={subKinchoo}/>
 				</Grid>
 				<Grid item xs={4}>
 					<Sidebar subKinchoo={subKinchoo}/>

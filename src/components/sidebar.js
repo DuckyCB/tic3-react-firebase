@@ -12,10 +12,9 @@ const Item = styled(Paper)(({ theme }) => ({
 	width: theme.spacing(25)
 }));
 
-export default function Sidebar(subKinchoo) {
+export default function Sidebar({subKinchoo}) {
 	let addNewPost
-	let sub = subKinchoo.subKinchoo
-	if (sub) {
+	if (subKinchoo) {
 		addNewPost =
 			<Button sx={{width: 200}} variant="contained" onClick={() => {
 			}}>
