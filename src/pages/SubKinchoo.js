@@ -14,6 +14,8 @@ export default function SubKinchoo() {
 	const [posts, setPosts] = useState([]);
 	const { subname } = useParams();
 
+	const user = true;
+
 	useEffect(() => {
 		async function fetchPosts(): void {
 			try {
@@ -75,7 +77,7 @@ export default function SubKinchoo() {
 						) : (
 							<Skeleton animation='wave' variant='rectangular' sx={{width: 8/10, height: 150}}/>
 						)}
-						<AddNewPost subKinchoo={subKinchoo}/>
+						{user ? (<AddNewPost subKinchoo={subKinchoo}/>) : null}
 					</Stack>
 				</Grid>
 			</Grid>
