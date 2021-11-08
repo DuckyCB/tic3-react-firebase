@@ -38,6 +38,7 @@ export default function SubKinchooInfo({ subKinchoo }) {
 					Followers: {subKinchoo.followersCount}
 				</Typography>
 			</CardContent>
+			{/*TODO: Boton de suscribirse al subKinchoo*/}
 		</Card>
 	)
 
