@@ -1,32 +1,26 @@
 import {Card, CardContent, CardHeader} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
 import {red} from "@mui/material/colors";
+import PersonIcon from '@mui/icons-material/Person';
 import React from "react";
 
 
-export default function SubKinchooInfo({ subKinchoo }) {
+export default function UserInfo({ user }) {
 
 	return (
 		<Card sx={{width: 8/10}}>
 			<CardHeader
 				title={
 					<Typography variant="h5"  gutterBottom>
-						{subKinchoo.name}
+							{user.firstName} {user.lastName}
 					</Typography>
 				}
-				avatar={
-					<Avatar sx={{bgcolor: red[500], height: 70, width: 70}} aria-label="recipe"
-							src={subKinchoo.avatar}/>
-				}
-				subheader={subKinchoo.subname}
+				avatar={<PersonIcon sx={{bgcolor: red[500], height: 70, width: 70}}/>}
+				subheader={user.username}
 			/>
 			<CardContent>
-				<Typography>
-					{subKinchoo.description}
-				</Typography>
 				<Typography variant='caption'>
-					Followers: {subKinchoo.followersCount}
+					Number of posts: {user.postsCount}
 				</Typography>
 			</CardContent>
 		</Card>

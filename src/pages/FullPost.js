@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import Navbar from "../components/navbar";
-import Post from "../components/post";
-import Comments from "../components/comments";
+import Navbar from "../components/Navbar";
+import Post from "../components/Post";
+import Comments from "../components/Comments";
 import {useParams} from "react-router-dom";
 import {doc, onSnapshot} from "firebase/firestore";
 import {db} from "../lib/firebase";

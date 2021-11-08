@@ -1,6 +1,6 @@
 import React from "react";
 import {Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Link, Typography} from "@mui/material";
-import VoteButtons from "./vote-buttons";
+import VoteButtons from "./VoteButtons";
 import Avatar from "@mui/material/Avatar";
 import {red} from "@mui/material/colors";
 import {Link as RouterLink} from "react-router-dom";
@@ -13,15 +13,31 @@ export function formatDate(dateFS){
     return day + "/" + month + "/" + year;
 }
 
-const Post = ({post, fullRender}) => {
-    let user;
-    if (post.user) {
-        user = `Posted by u/${post.user.username}`
-    }
+function Content({post, fullRender}) {
 
     let img;
     if (post.imgURL) {
         img = <CardMedia component="img" alt="Image not fetched" image={post.imgURL}/>
+    }
+
+    return (
+        <CardContent>
+            <Typography variant="h6" display="block" gutterBottom>
+                {post.title}
+            </Typography>
+            {post.imgURL ? <CardMedia component="img" alt="Image not fetched" image={post.imgURL}/> : null}
+            <Typography sx={fullRender ? {} : {maxHeight: 250, overflow: 'hidden', display: (post.imgURL === '' ?
+                    'block' : 'none')}} align={"justify"} >
+                {post.content}
+            </Typography>
+        </CardContent>
+    )
+}
+
+const Post = ({post, fullRender}) => {
+    let user;
+    if (post.user) {
+        user = `Posted by u/${post.user.username}`
     }
     const date = formatDate(post.createdAt)
 
@@ -46,19 +62,16 @@ const Post = ({post, fullRender}) => {
                    </Link>
                }
            />
-           <CardActionArea sx={fullRender ? {disabled: true} : {}} component={RouterLink} to={`/p/${post.id}`}>
-               <CardContent>
-                   <Typography variant="h6" display="block" gutterBottom>
-                       {post.title}
-                   </Typography>
-                   {img}
-                   <Typography sx={fullRender ? {} : {maxHeight: 250, overflow: 'hidden', display: (post.imgURL === '' ? 'block' : 'none')}} align={"justify"} >
-                       {post.content}
-                   </Typography>
-               </CardContent>
-           </CardActionArea>
+           {fullRender ? (
+               <Content post={post} fullRender={fullRender}/>
+           ) : (
+               <CardActionArea component={RouterLink} to={`/p/${post.id}`}>
+                   <Content post={post} fullRender={fullRender}/>
+               </CardActionArea>
+           )}
            <CardActions>
                <VoteButtons post = {post}/>
+               {/* TODO: Hacer que esto este contra la derecha*/}
                <Typography align={"right"} >
                    Posted: {date}
                </Typography>

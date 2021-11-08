@@ -1,22 +1,34 @@
-import Navbar from "../components/navbar";
+import Navbar from "../components/Navbar";
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {collection, query, where, onSnapshot} from "firebase/firestore";
+import {collection, query, where, onSnapshot, orderBy, getDocs} from "firebase/firestore";
 import {db} from "../lib/firebase";
-import {Card, CardContent, CardHeader, Grid, Stack} from "@mui/material";
-import Timeline from "../components/timeline";
-import Sidebar from "../components/sidebar";
-import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
-import {red} from "@mui/material/colors";
-import SubKinchooInfo from "../components/sidebar/subKinchooInfo";
+import {Grid, Skeleton, Stack} from "@mui/material";
+import Timeline from "../components/Timeline";
+import SubKinchooInfo from "../components/sidebar/SubKinchooInfo";
 import AddNewPost from "../components/sidebar/AddNewPost";
+import SkeletonPosts from "../components/skeleton/SkeletonPosts";
 
 export default function SubKinchoo() {
 	const [subKinchoo, setSubKinchoo] = useState([]);
+	const [posts, setPosts] = useState([]);
 	const { subname } = useParams();
 
 	useEffect(() => {
+		async function fetchPosts(): void {
+			try {
+				const postsQuery = query(collection(db, "posts"), where("subKinchoo.subname", "==", subname),
+					orderBy("createdAt", "desc"));
+				const postsSnapshot = await getDocs(postsQuery);
+				const postsArr = [];
+				postsSnapshot.docs.map(post =>
+					postsArr.push({id: post.id, ...post.data()})
+				);
+				setPosts(postsArr);
+			} catch (e) {
+				console.error(e.message);
+			}
+		}
 		async function fetchSubKinchooData() {
 			try {
 				new Promise((resolve) => {
@@ -35,13 +47,14 @@ export default function SubKinchoo() {
 					setSubKinchoo(subKinchoos[0]);
 				})
 
-
 			} catch (e) {
 				console.error(e.message);
 			}
 		}
 		fetchSubKinchooData();
+		fetchPosts();
 	}, []);
+
 	document.title = subKinchoo ? `r/${subKinchoo.subname}` : 'r/';
 
 	return (
@@ -49,13 +62,19 @@ export default function SubKinchoo() {
 			<Navbar/>
 			<Grid container spacing={2} justifyContent="center" alignItems="flex-start">
 				<Grid item xs={8}>
-					<Stack spacing={4} justifyContent="center" mb={5} mt={2} alignItems="right">
-					</Stack>
-					<Timeline subKinchoo={subKinchoo}/>
+					{posts ? (
+						<Timeline posts={posts}/>
+					) : (
+						<SkeletonPosts/>
+					)}
 				</Grid>
 				<Grid item xs={4}>
 					<Stack spacing={4} justifyContent="center" mb={5} mt={2} alignItems="left">
-						<SubKinchooInfo subKinchoo={subKinchoo}/>
+						{subKinchoo ? (
+							<SubKinchooInfo subKinchoo={subKinchoo}/>
+						) : (
+							<Skeleton animation='wave' variant='rectangular' sx={{width: 8/10, height: 150}}/>
+						)}
 						<AddNewPost subKinchoo={subKinchoo}/>
 					</Stack>
 				</Grid>
