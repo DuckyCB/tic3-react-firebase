@@ -2,7 +2,7 @@ import Navbar from "../components/Navbar";
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {db} from "../lib/firebase";
-import {collection, getDocs, where, query, orderBy} from "firebase/firestore";
+import {collection, getDocs, where, query, orderBy, onSnapshot} from "firebase/firestore";
 import {Grid, Skeleton, Stack} from "@mui/material";
 import Timeline from "../components/Timeline";
 import UserInfo from "../components/sidebar/UserInfo";
@@ -18,12 +18,16 @@ export default function UserProfile() {
 			try {
 				const postsQuery = query(collection(db, "posts"), where("user.username", "==", username),
 					orderBy("createdAt", "desc"));
-				const postsSnapshot = await getDocs(postsQuery);
-				const postsArr = [];
-				postsSnapshot.docs.map(post =>
-					postsArr.push({id: post.id, ...post.data()})
-				);
-				setPosts(postsArr);
+				onSnapshot(postsQuery, (querySnapshot) => {
+					const postsArr = [];
+					querySnapshot.forEach((doc) => {
+						postsArr.push({
+							id: doc.id,
+							...doc.data(),
+						});
+					})
+					setPosts(postsArr)
+				});
 			} catch (e) {
 				console.error(e.message);
 			}

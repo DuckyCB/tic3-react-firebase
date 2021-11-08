@@ -4,7 +4,7 @@ import Timeline from "../components/Timeline";
 import {Grid} from "@mui/material";
 import TopSubKinchoos from "../components/sidebar/TopSubKinchoos";
 import AboutUs from "../components/sidebar/AboutUs";
-import {collection, getDocs, orderBy, query} from "firebase/firestore";
+import {collection, onSnapshot, orderBy, query} from "firebase/firestore";
 import {db} from "../lib/firebase";
 import SkeletonPosts from "../components/skeleton/SkeletonPosts";
 
@@ -15,12 +15,16 @@ export default function Dashboard() {
 		async function fetchPosts() {
 			try {
 				const postsQuery = query(collection(db, "posts"), orderBy("createdAt", "desc"));
-				const postsSnapshot = await getDocs(postsQuery);
+				onSnapshot(postsQuery, (querySnapshot) => {
 				const postsArr = [];
-				postsSnapshot.docs.map(post =>
-					postsArr.push({id: post.id, ...post.data()})
-				);
-				setPosts(postsArr);
+				querySnapshot.forEach((doc) => {
+					postsArr.push({
+						id: doc.id,
+						...doc.data(),
+					});
+				})
+				setPosts(postsArr)
+				});
 			} catch (e) {
 				console.error(e.message);
 			}

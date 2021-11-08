@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar";
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {collection, query, where, onSnapshot, orderBy, getDocs} from "firebase/firestore";
+import {collection, query, where, onSnapshot, orderBy} from "firebase/firestore";
 import {db} from "../lib/firebase";
 import {Grid, Skeleton, Stack} from "@mui/material";
 import Timeline from "../components/Timeline";
@@ -21,12 +21,16 @@ export default function SubKinchoo() {
 			try {
 				const postsQuery = query(collection(db, "posts"), where("subKinchoo.subname", "==", subname),
 					orderBy("createdAt", "desc"));
-				const postsSnapshot = await getDocs(postsQuery);
-				const postsArr = [];
-				postsSnapshot.docs.map(post =>
-					postsArr.push({id: post.id, ...post.data()})
-				);
-				setPosts(postsArr);
+				onSnapshot(postsQuery, (querySnapshot) => {
+					const postsArr = [];
+					querySnapshot.forEach((doc) => {
+						postsArr.push({
+							id: doc.id,
+							...doc.data(),
+						});
+					})
+					setPosts(postsArr)
+				});
 			} catch (e) {
 				console.error(e.message);
 			}

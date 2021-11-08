@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import {Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField} from "@mui/material";
 import {useState} from "react";
-import {addDoc, collection} from "firebase/firestore";
+import {addDoc, collection, Timestamp} from "firebase/firestore";
 import {db} from "../../lib/firebase";
 
 
@@ -11,7 +11,7 @@ export default function AddNewPost({ subKinchoo }) {
 	const [title, setTitle] = useState('');
 	const [imgURL, setImgURL] = useState('');
 	const [content, setContent] = useState('');
-
+	const date = new Date();
 	// TODO: Obtener isntancia del usuario actual
 	const logedUser = {id: 'l8pt7BnTT5XVCSlsxshTWJ7jpPn1', username: 'kinchu'};
 
@@ -21,7 +21,7 @@ export default function AddNewPost({ subKinchoo }) {
 			subKinchoo: {id: subKinchoo.id, subname: subKinchoo.subname, avatar: subKinchoo.avatar},
 			upVotesCount: 1,
 			downVotesCount: 0,
-			createdAt: 'Fecha actual',
+			createdAt: Timestamp.fromDate(date),
 			title: title,
 			imgURL: imgURL,
 			content: content
