@@ -26,7 +26,6 @@ export default function AddNewPost({ subKinchoo }) {
 			imgURL: imgURL,
 			content: content
 		})
-		// TODO: Guardar el post nuevo
 		// TODO: Cuando se guarda el post, se le suma 1 a la cantidad de posts del usuario
 		setOpen(false);
 	};
