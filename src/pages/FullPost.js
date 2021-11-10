@@ -20,7 +20,6 @@ export default function FullPost() {
                 onSnapshot(docRef, (snapshot) => {
                     setPost({id: snapshot.id, ...snapshot.data()});
                 });
-                document.title = post ? `p/${post.title}` : 'p/';
             } catch (err) {
                 console.error(err);
             }
@@ -29,6 +28,7 @@ export default function FullPost() {
 
     }, []);
 
+    document.title = post ? `p/${post.title}` : 'p/';
 
     return (
         <>

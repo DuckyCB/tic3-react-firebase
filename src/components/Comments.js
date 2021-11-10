@@ -3,24 +3,27 @@ import React, {useEffect, useState} from "react";
 import styled from "@emotion/styled";
 import Box from "@mui/material/Box";
 import {Link as RouterLink} from "react-router-dom";
+import {collection, limit, onSnapshot, orderBy, query} from "firebase/firestore";
+import {db} from "../lib/firebase";
 
 
-function Comment({comment}) {
-    const Img = styled('img')({
-        margin: 'auto',
-        display: 'block',
-        maxWidth: '100%',
-        maxHeight: '100%',
-    });
+function Comment({content, postedBy}) {
+    // const Img = styled('img')({
+    //     margin: 'auto',
+    //     display: 'block',
+    //     maxWidth: '100%',
+    //     maxHeight: '100%',
+    // });
     return (
         <Card variant="outlined" sx={{ width: '100%' }}>
             <CardContent>
                 <Typography variant="body1" color="text.primary">
-                    {comment.content}
+                    {content}
                 </Typography>
                 <Typography variant="caption" color="text.secondary" component={RouterLink}
-                            to={`/u/${comment.postedBy}`} sx={{ textDecoration: 'none', color: 'text.primary' }}>
-                    {comment.postedBy} - {comment.createdAt}
+                            to={`/u/${postedBy}`} sx={{ textDecoration: 'none', color: 'text.primary' }}>
+                    {postedBy}
+                    {/*{postedBy} - {createdAt}*/}
                 </Typography>
             </CardContent>
         </Card>
@@ -33,25 +36,36 @@ export default function Comments({post}) {
 
     useEffect(() => {
         async function getComments() {
-            // TODO: obtener los comentarios del post, está en una subcollection 'comments' del post
-            const hardcodedComments = [
-                {'content': 'Muy buen post bro, la verdad estoy totalmente de acuerdo. Que siga asi el buen contenido. ' +
-                        'Saludos a la flia!', 'postedBy': 'ducky', 'createdAt': '06/11/2021 11:37'},
-                {'content': 'Además, para recuperar todos los documentos de una colección, puedes omitir el filtro ' +
-                        'where() por completo, como se muestra a continuación:', 'postedBy': 'kinchu',
-                        'createdAt': '06/12/2021 16:20'},
-                {'content': 'contenido 2', 'postedBy': 'kinchu', 'createdAt': '06/11/2021 12:37'},
-                {'content': 'contenido 3', 'postedBy': 'kinchu', 'createdAt': '06/11/2021 13:34'},
-                {'content': 'contenido 4', 'postedBy': 'kinchu', 'createdAt': '06/11/2021 14:39'}
-            ];
-            setComments(hardcodedComments)
+            try {
+                const q = query(collection(db, 'posts', post.id, 'comments'));
+                onSnapshot(q, (querySnapshot) => {
+                    const _comments = [];
+                    querySnapshot.forEach((doc) => {
+                        _comments.push({id: doc.id, ...doc.data()});
+                    });
+                    setComments(_comments);
+                    console.log(_comments)
+                });
+            } catch (err) {
+                console.error(err);
+            }
+            // const hardcodedComments = [
+            //     {'content': 'Muy buen post bro, la verdad estoy totalmente de acuerdo. Que siga asi el buen contenido. ' +
+            //             'Saludos a la flia!', 'postedBy': 'ducky', 'createdAt': '06/11/2021 11:37'},
+            //     {'content': 'Además, para recuperar todos los documentos de una colección, puedes omitir el filtro ' +
+            //             'where() por completo, como se muestra a continuación:', 'postedBy': 'kinchu',
+            //             'createdAt': '06/12/2021 16:20'},
+            //     {'content': 'contenido 2', 'postedBy': 'kinchu', 'createdAt': '06/11/2021 12:37'},
+            //     {'content': 'contenido 3', 'postedBy': 'kinchu', 'createdAt': '06/11/2021 13:34'},
+            //     {'content': 'contenido 4', 'postedBy': 'kinchu', 'createdAt': '06/11/2021 14:39'}
+            // ];
+            // setComments(hardcodedComments)
         }
         getComments();
 
     },[]);
 
-    const handleNewComment = (event) => {
-        event.preventDefault();
+    async function handleNewComment() {
         // TODO: Crear nuevo comentario
     };
 
@@ -60,7 +74,7 @@ export default function Comments({post}) {
             <Stack spacing={1} justifyContent="center" alignItems="center"
                    sx={{ width: 9/10, paddingTop: 4, paddingBottom: 4, margin: 'auto' }}>
                 {comments.map((comment) =>
-                    <Comment comment={comment}/>
+                    <Comment content={comment.content} postedBy={comment.postedBy}/>
                 )}
             </Stack>
             <Box component="form" onSubmit={handleNewComment} sx={{ width: 9/10, paddingBottom: 4, margin: 'auto' }}>

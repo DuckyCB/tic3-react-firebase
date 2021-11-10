@@ -24,7 +24,6 @@ export default function CreateNewSubKinchoo() {
         const docRef = await addDoc(collection(db, 'subkinchoo'), {
             avatar: avatar,
             description: description,
-            followers: [],
             followersCount: 0,
             name: name,
             posts: [],

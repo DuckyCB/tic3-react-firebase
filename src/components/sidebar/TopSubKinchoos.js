@@ -58,7 +58,7 @@ export default function TopSubKinchoos() {
 
 
 	return (
-		<Paper sx={{ width: 8/10, marginTop: 2, marginBottom: 2 }}>
+		<Paper sx={{ width: 8/10}}>
 			<Typography sx={{ paddingTop: 3, paddingBottom: 1 }} align='center' variant='h5'>
 				Top 5 subKinchoos
 			</Typography>

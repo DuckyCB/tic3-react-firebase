@@ -1,15 +1,19 @@
 import Navbar from "../components/Navbar";
 import React, {useEffect, useState} from "react";
 import Timeline from "../components/Timeline";
-import {Grid} from "@mui/material";
+import {Grid, Stack} from "@mui/material";
 import TopSubKinchoos from "../components/sidebar/TopSubKinchoos";
 import AboutUs from "../components/sidebar/AboutUs";
 import {collection, onSnapshot, orderBy, query} from "firebase/firestore";
 import {db} from "../lib/firebase";
 import SkeletonPosts from "../components/skeleton/SkeletonPosts";
+import CreateNewSubKinchoo from "../components/sidebar/CreateNewSubKinchoo";
 
 export default function Dashboard() {
 	const [posts, setPosts] = useState([]);
+
+	// TODO: Obtener usuario logeado
+	const logeduser = true;
 
 	useEffect(() => {
 		async function fetchPosts() {
@@ -45,8 +49,11 @@ export default function Dashboard() {
 					)}
 				</Grid>
 				<Grid item xs={4}>
-					<TopSubKinchoos/>
-					<AboutUs/>
+					<Stack spacing={3} paddingTop={3}>
+						<TopSubKinchoos/>
+						{logeduser ? <CreateNewSubKinchoo/> : null}
+						<AboutUs/>
+					</Stack>
 				</Grid>
 			</Grid>
 		</>
