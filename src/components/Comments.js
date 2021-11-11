@@ -74,7 +74,8 @@ export default function Comments({post}) {
                 <Box sx={{width: '100%'}}>
                     <Grid container component="form" sx={{paddingBottom: 4}} spacing={1}>
                         <Grid item xs={10}>
-                            <TextField fullWidth onSubmit={handleNewComment} id="outlined-textarea" label="New comment" placeholder="Excelent post!" multiline
+                            <TextField fullWidth id="outlined-textarea" label="New comment" placeholder="Excelent post!" multiline
+                                       value={newComment}
                                        onChange={({target}) => setNewComment(target.value)}/>
                         </Grid>
                         <Grid item xs={2} container>
@@ -83,15 +84,6 @@ export default function Comments({post}) {
                     </Grid>
                 </Box>
             </Stack>
-            {/*<Grid container component="form" sx={{ width: 8/10, paddingBottom: 4, margin: 'auto'}} spacing={1}>*/}
-            {/*    <Grid item xs={11}>*/}
-            {/*    <TextField fullWidth onSubmit={handleNewComment} id="outlined-textarea" label="New comment" placeholder="Excelent post!" multiline*/}
-            {/*               onChange={({target}) => setNewComment(target.value)}/>*/}
-            {/*    </Grid>*/}
-            {/*    <Grid item xs={1}>*/}
-            {/*        <Button variant="contained" sx={{height: '100%'}} onClick={handleNewComment}>+</Button>*/}
-            {/*    </Grid>*/}
-            {/*</Grid>*/}
         </Paper>
     )
 }

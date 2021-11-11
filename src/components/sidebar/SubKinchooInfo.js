@@ -36,8 +36,9 @@ function Subscribe({subKinchoo, user}) {
 
 export default function SubKinchooInfo({ subKinchoo }) {
 	const { loading = false } = subKinchoo;
+
 	// TODO: Recuperar usuario logeado
-	const user = true;
+	const user = {id: 'l8pt7BnTT5XVCSlsxshTWJ7jpPn1'};
 
 	return (
 		<Card sx={{width: 8/10}}>
