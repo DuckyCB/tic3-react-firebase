@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import { loginUser } from "../utils/userUtils";
 
+//TODO : avatar
 
 export default function SignUp() {
 	const history = useHistory();
