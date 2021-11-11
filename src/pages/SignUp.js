@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 
+//TODO : avatar
 
 export default function SignUp() {
 	const history = useHistory();

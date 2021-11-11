@@ -5,7 +5,7 @@ import {Stack, Typography} from "@mui/material";
 import {doc, Timestamp, writeBatch} from "firebase/firestore";
 const {db} = require("../lib/firebase");
 
-// TODO: Obtener usuario actual
+// TODO: Obtener instancia del usuario actual
 
 
 export default function VoteButtons ({ post }){

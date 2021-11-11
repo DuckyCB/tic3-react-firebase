@@ -36,7 +36,7 @@ export default function AddNewPost({ subKinchoo }) {
 		batch.update(userRef, {postsCount: postsCount});
 		await batch.commit()
 		setOpen(false);
-	};
+	}
 
 	const handleClickOpen = () => {
 		setOpen(true);
