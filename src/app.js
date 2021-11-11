@@ -19,9 +19,9 @@ const getDesignTokens = (mode) => ({
     palette: {
         mode,
         ...(mode === 'light' ? {
-                orangebg: { main: '#ff9f00',}, white: {main: '#ffffff'}, tonalOffset: 0,
+                orangebg: { main: '#ff9f00',}, white: {main: '#ffffff'}, upvote : {main: '#FF8b60'}, downvote : {main: '#9494FF'}, disabled : {main: "#bdbdbd"},   tonalOffset: 0,
             } : {
-                orangebg: {main: '#ff9f00',}, white: {main: '#ffffff'}, tonalOffset: 0,
+                orangebg: {main: '#ff9f00',}, white: {main: '#ffffff'}, upvote : {main: '#FF8b60'},  downvote : {main: '#9494FF'}, disabled : {main: "#626262"}, tonalOffset: 0,
             }),
     },
 });

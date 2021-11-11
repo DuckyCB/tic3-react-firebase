@@ -24,7 +24,9 @@ export default function AddNewPost({ subKinchoo }) {
 			createdAt: Timestamp.fromDate(date),
 			title: title,
 			imgURL: imgURL,
-			content: content
+			content: content,
+			usersUpvote:[user.id],
+			usersDownvote:[]
 		})
 
 		const postsCount = user.postsCount + 1;
