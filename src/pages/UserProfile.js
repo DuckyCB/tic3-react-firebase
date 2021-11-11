@@ -14,7 +14,7 @@ export default function UserProfile() {
 	const { username } = useParams();
 
 	useEffect(() => {
-		async function fetchPosts(): void {
+		async function fetchPosts() {
 			try {
 				const postsQuery = query(collection(db, "posts"), where("user.username", "==", username),
 					orderBy("createdAt", "desc"));
@@ -32,7 +32,7 @@ export default function UserProfile() {
 				console.error(e.message);
 			}
 		}
-		async function fetchUserData(): void {
+		async function fetchUserData() {
 			try {
 				const userQuery = query(collection(db, 'users'), where('username', '==', username));
 				const userResult = await getDocs(userQuery);
@@ -74,5 +74,5 @@ export default function UserProfile() {
 				</Grid>
 			</Grid>
 		</>
-	)
+	);
 }
