@@ -7,37 +7,37 @@ body {
     margin: 0;
 }
 
-.logo {
-    position: absolute;
-    top: .5rem;
-    left: .5rem;
-    width: 5rem;
-    height: 5rem;
-    border-radius: 100%;
-    overflow: hidden;
-    z-index: 100;
-}
+/*.logo {*/
+/*    position: absolute;*/
+/*    top: .5rem;*/
+/*    left: .5rem;*/
+/*    width: 5rem;*/
+/*    height: 5rem;*/
+/*    border-radius: 100%;*/
+/*    overflow: hidden;*/
+/*    z-index: 100;*/
+/*}*/
 
-.logo::before {
-    content: "";
-    background: url(./imgs/team-seas-logo.png);
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-}
+/*.logo::before {*/
+/*    content: "";*/
+/*    background: url(./imgs/team-seas-logo.png);*/
+/*    position: absolute;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    background-size: cover;*/
+/*}*/
 
-.logo::after {
-    content: '';
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    background-color: hsla(290, 31%, 67%, .9);
-    bottom: 0;
-    left: -50%;
-    border-radius: 35%;
-    animation: waves 5s ease-in-out alternate infinite;
-}
+/*.logo::after {*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    width: 200%;*/
+/*    height: 200%;*/
+/*    background-color: hsla(290, 31%, 67%, .9);*/
+/*    bottom: 0;*/
+/*    left: -50%;*/
+/*    border-radius: 35%;*/
+/*    animation: waves 5s ease-in-out alternate infinite;*/
+/*}*/
 
 @keyframes waves {
     to {

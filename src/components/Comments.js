@@ -3,17 +3,15 @@ import React, {useEffect, useState} from "react";
 import styled from "@emotion/styled";
 import Box from "@mui/material/Box";
 import {Link as RouterLink} from "react-router-dom";
-import {collection, limit, onSnapshot, orderBy, query} from "firebase/firestore";
+import {addDoc, collection, onSnapshot, query, Timestamp} from "firebase/firestore";
 import {db} from "../lib/firebase";
+import {formatMinutes} from "../utils/date-utils";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 
 
-function Comment({content, postedBy}) {
-    // const Img = styled('img')({
-    //     margin: 'auto',
-    //     display: 'block',
-    //     maxWidth: '100%',
-    //     maxHeight: '100%',
-    // });
+function Comment({content, postedBy, createdAt}) {
+
     return (
         <Card variant="outlined" sx={{ width: '100%' }}>
             <CardContent>
@@ -22,8 +20,7 @@ function Comment({content, postedBy}) {
                 </Typography>
                 <Typography variant="caption" color="text.secondary" component={RouterLink}
                             to={`/u/${postedBy}`} sx={{ textDecoration: 'none', color: 'text.primary' }}>
-                    {postedBy}
-                    {/*{postedBy} - {createdAt}*/}
+                    {postedBy} - {createdAt}
                 </Typography>
             </CardContent>
         </Card>
@@ -32,7 +29,10 @@ function Comment({content, postedBy}) {
 
 export default function Comments({post}) {
     const [comments, setComments] = useState([]);
-    const [newComment, setNewComment] = useState([])
+    const [newComment, setNewComment] = useState([]);
+
+    // TODO: Obtener usuario logeado
+    const user = {username: 'kinko'}
 
     useEffect(() => {
         async function getComments() {
@@ -44,29 +44,24 @@ export default function Comments({post}) {
                         _comments.push({id: doc.id, ...doc.data()});
                     });
                     setComments(_comments);
-                    console.log(_comments)
                 });
             } catch (err) {
                 console.error(err);
             }
-            // const hardcodedComments = [
-            //     {'content': 'Muy buen post bro, la verdad estoy totalmente de acuerdo. Que siga asi el buen contenido. ' +
-            //             'Saludos a la flia!', 'postedBy': 'ducky', 'createdAt': '06/11/2021 11:37'},
-            //     {'content': 'Además, para recuperar todos los documentos de una colección, puedes omitir el filtro ' +
-            //             'where() por completo, como se muestra a continuación:', 'postedBy': 'kinchu',
-            //             'createdAt': '06/12/2021 16:20'},
-            //     {'content': 'contenido 2', 'postedBy': 'kinchu', 'createdAt': '06/11/2021 12:37'},
-            //     {'content': 'contenido 3', 'postedBy': 'kinchu', 'createdAt': '06/11/2021 13:34'},
-            //     {'content': 'contenido 4', 'postedBy': 'kinchu', 'createdAt': '06/11/2021 14:39'}
-            // ];
-            // setComments(hardcodedComments)
         }
         getComments();
 
     },[]);
 
     async function handleNewComment() {
-        // TODO: Crear nuevo comentario
+        const docRef = await addDoc(collection(db, 'posts', post.id, 'comments'), {
+            content: newComment,
+            createdAt: Timestamp.fromDate(new Date()),
+            downVotes: 0,
+            upVotes: 0,
+            postedBy: user.username
+        });
+        setNewComment('');
     };
 
     return (
@@ -74,12 +69,29 @@ export default function Comments({post}) {
             <Stack spacing={1} justifyContent="center" alignItems="center"
                    sx={{ width: 9/10, paddingTop: 4, paddingBottom: 4, margin: 'auto' }}>
                 {comments.map((comment) =>
-                    <Comment content={comment.content} postedBy={comment.postedBy}/>
+                    <Comment content={comment.content} postedBy={comment.postedBy} createdAt={formatMinutes(comment.createdAt)}/>
                 )}
+                <Box sx={{width: '100%'}}>
+                    <Grid container component="form" sx={{paddingBottom: 4}} spacing={1}>
+                        <Grid item xs={10}>
+                            <TextField fullWidth onSubmit={handleNewComment} id="outlined-textarea" label="New comment" placeholder="Excelent post!" multiline
+                                       onChange={({target}) => setNewComment(target.value)}/>
+                        </Grid>
+                        <Grid item xs={2} container>
+                            <Button variant="contained" sx={{height: '100%', width: '100%'}} onClick={handleNewComment}>+</Button>
+                        </Grid>
+                    </Grid>
+                </Box>
             </Stack>
-            <Box component="form" onSubmit={handleNewComment} sx={{ width: 9/10, paddingBottom: 4, margin: 'auto' }}>
-                <TextField fullWidth id="outlined-textarea" label="New comment" placeholder="Excelent post!" multiline/>
-            </Box>
+            {/*<Grid container component="form" sx={{ width: 8/10, paddingBottom: 4, margin: 'auto'}} spacing={1}>*/}
+            {/*    <Grid item xs={11}>*/}
+            {/*    <TextField fullWidth onSubmit={handleNewComment} id="outlined-textarea" label="New comment" placeholder="Excelent post!" multiline*/}
+            {/*               onChange={({target}) => setNewComment(target.value)}/>*/}
+            {/*    </Grid>*/}
+            {/*    <Grid item xs={1}>*/}
+            {/*        <Button variant="contained" sx={{height: '100%'}} onClick={handleNewComment}>+</Button>*/}
+            {/*    </Grid>*/}
+            {/*</Grid>*/}
         </Paper>
     )
 }

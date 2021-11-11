@@ -4,14 +4,7 @@ import VoteButtons from "./VoteButtons";
 import Avatar from "@mui/material/Avatar";
 import {red} from "@mui/material/colors";
 import {Link as RouterLink} from "react-router-dom";
-
-export function formatDate(dateFS){
-    const dateJS = dateFS.toDate();
-    const month = dateJS.getUTCMonth() + 1; //months from 1-12
-    const day = dateJS.getUTCDate();
-    const year = dateJS.getUTCFullYear();
-    return day + "/" + month + "/" + year;
-}
+import {formatDay} from "../utils/date-utils";
 
 function Content({post, fullRender}) {
 
@@ -39,7 +32,7 @@ const Post = ({post, fullRender}) => {
     if (post.user) {
         user = `Posted by u/${post.user.username}`
     }
-    const date = formatDate(post.createdAt)
+    const date = formatDay(post.createdAt)
 
 
     const styleUser = {
@@ -69,9 +62,8 @@ const Post = ({post, fullRender}) => {
                    <Content post={post} fullRender={fullRender}/>
                </CardActionArea>
            )}
-           <CardActions>
+           <CardActions sx={{justifyContent: 'space-between'}}>
                <VoteButtons post = {post}/>
-               {/* TODO: Hacer que esto este contra la derecha*/}
                <Typography align={"right"} >
                    Posted: {date}
                </Typography>
