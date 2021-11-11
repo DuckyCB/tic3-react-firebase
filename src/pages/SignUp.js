@@ -10,6 +10,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
+import { loginUser } from "../utils/userUtils";
 
 
 export default function SignUp() {
@@ -45,6 +46,7 @@ export default function SignUp() {
                 return;
             }
 			const user = await signUp(emailAddress, password, firstName, lastName, username);
+            await loginUser(emailAddress, password);
 			history.push(ROUTES.DASHBOARD);
 		} catch ({message, code}) {
             if (message === 'username already exists') {

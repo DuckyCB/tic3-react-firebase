@@ -15,7 +15,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-
+import { loginUser } from "../utils/userUtils";
 
 
 export default function LogIn() {
@@ -33,7 +33,8 @@ export default function LogIn() {
 
 		try {
 			// await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
-			await login(emailAddress, password);
+            console.log(emailAddress, password);
+			await loginUser(emailAddress, password);
 			history.push(ROUTES.DASHBOARD);
 		} catch ({message}) {
 			setEmailAddress('');
@@ -71,10 +72,10 @@ export default function LogIn() {
 						</Typography>
 						<Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
 							<TextField margin="normal" required fullWidth id="email" label="Email Address"
-								name="email" autoComplete="email" autoFocus
+								name="email" autoComplete="email" autoFocus value={emailAddress} onChange={({target}) => setEmailAddress(target.value)}
 							/>
 							<TextField margin="normal" required fullWidth name="password" label="Password"
-								type="password" id="password" autoComplete="current-password"
+								type="password" id="password" autoComplete="current-password" value={password} onChange={({target}) => setPassword(target.value)}
 							/>
 							<FormControlLabel
 								control={<Checkbox value="remember" color="primary" />}
