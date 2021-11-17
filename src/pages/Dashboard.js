@@ -8,7 +8,7 @@ import {collection, onSnapshot, orderBy, query} from "firebase/firestore";
 import {db} from "../lib/firebase";
 import SkeletonPosts from "../components/skeleton/SkeletonPosts";
 import CreateNewSubKinchoo from "../components/sidebar/CreateNewSubKinchoo";
-import { fetchUserData } from "../utils/userUtils";
+import { fetchUserData, logout } from "../utils/userUtils";
 import { set } from "react-hook-form";
 import { auth } from "../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth"
@@ -17,9 +17,6 @@ export default function Dashboard() {
 	const [posts, setPosts] = useState([]);
     const [userData, setUserData] = useState(null);
     const [user, loading, error] = useAuthState(auth);
-
-	// TODO: Obtener usuario logeado
-	const logeduser = true;
 
 	useEffect(() => {
 		async function fetchPosts() {
@@ -53,14 +50,18 @@ export default function Dashboard() {
         fetchData();
     }, [user, loading]);
 
+	const logoutUser = async () => {
+		await logout();
+		setUserData(null);
+	}
+
     // useEffect(() => {
     //     console.log(user);
     // }, [user]);
 
-
 	return (
 		<>
-			<Navbar />
+			<Navbar user={userData} onLogout={logoutUser}/>
 			<Grid container spacing={2} justifyContent="center" alignItems="flex-start">
 				<Grid item xs={8}>
 					{posts ? (
@@ -72,7 +73,7 @@ export default function Dashboard() {
 				<Grid item xs={4}>
 					<Stack spacing={3} paddingTop={3}>
 						<TopSubKinchoos/>
-						{logeduser ? <CreateNewSubKinchoo/> : null}
+						{userData ? <CreateNewSubKinchoo/> : null}
 						<AboutUs/>
 					</Stack>
 				</Grid>

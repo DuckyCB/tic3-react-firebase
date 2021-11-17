@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Link} from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {Link, useHistory} from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -27,6 +28,7 @@ import {ColorModeContext} from "../app";
 import * as ROUTES from "../constants/routes";
 import {red} from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
+import { logout } from '../utils/userUtils';
 
 const drawerWidth = 240;
 // TODO: Obtener isntancia del usuario actual
@@ -75,79 +77,94 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 	justifyContent: 'flex-start',
 }));
 
-export default function PersistentDrawerRight() {
+export default function Navbar({user, onLogout}) {
+	const history = useHistory();
 	const theme = useTheme();
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = useState(false);
+	const [sidebar, setSidebar] = useState(null);
+	const [menuOpener, setMenuOpener] = useState(null);
+
 	const handleDrawerOpen = () => {
 		setOpen(true);
 	};
-	let user = {
-		id: 'l8pt7BnTT5XVCSlsxshTWJ7jpPn1',
-		avatar: 'https://s1.eestatic.com/2018/12/07/deportes/futbol/futbol-copa_libertadores-boca_juniors_358976562_108958732_1706x960.jpg'
-    };
+	// let user = {
+	// 	id: 'l8pt7BnTT5XVCSlsxshTWJ7jpPn1',
+	// 	avatar: 'https://s1.eestatic.com/2018/12/07/deportes/futbol/futbol-copa_libertadores-boca_juniors_358976562_108958732_1706x960.jpg'
+    // };
 
 	const handleDrawerClose = () => {
 		setOpen(false);
 	};
-	let isLoggedIn = true;
-	let sidebar, menuOpener;
-	if (!user) {
-		sidebar =
+
+	
+	useEffect(() => {
+		if (!user) {
+			setSidebar(
+				<List>
+					<ListItem button key={'Login'} onClick={() => {
+						history.push(ROUTES.LOGIN);
+					}}>
+						<ListItemIcon>
+							<LoginIcon />
+						</ListItemIcon>
+						<ListItemText primary={'Login'} />
+					</ListItem>
+					<ListItem button key={'SignUp'} onClick={() => {
+						history.push(ROUTES.SIGNUP);
+					}}>
+						<ListItemIcon>
+							<SaveAltIcon />
+						</ListItemIcon>
+						<ListItemText primary={"SignUp"} />
+					</ListItem>
+	
+					<Divider />
+				</List>);
+			setMenuOpener(<>
+			<IconButton
+				color="inherit"
+				aria-label="open drawer"
+				edge="end"
+				onClick={handleDrawerOpen}
+				sx={{ ...(open && { display: 'none' }) }}
+			>
+				<MenuIcon />
+			</IconButton></>);
+		} else {
+			setSidebar(
 			<List>
-				<ListItem button key={'Login'}>
+				<ListItem button key={'Profile'} onClick={() => {
+					history.push(`/u/${user.username}`);
+				}}>
 					<ListItemIcon>
-						<LoginIcon />
+						<PersonIcon />
 					</ListItemIcon>
-					<ListItemText primary={'Login'} />
+					<ListItemText primary={'Profile'} />
 				</ListItem>
-				<ListItem button key={'SignUp'}>
-					<ListItemIcon>
-	                    <SaveAltIcon />
-					</ListItemIcon>
-					<ListItemText primary={"SignUp"} />
-				</ListItem>
-
 				<Divider />
-			</List>;
-		menuOpener = <IconButton
-			color="inherit"
-			aria-label="open drawer"
-			edge="end"
-			onClick={handleDrawerOpen}
-			sx={{ ...(open && { display: 'none' }) }}
-		>
-			<MenuIcon />
-		</IconButton>
-	} else {
-		sidebar =
-		<List>
-			<ListItem button key={'Profile'}>
-				<ListItemIcon>
-					<PersonIcon />
-				</ListItemIcon>
-				<ListItemText primary={'Profile'} />
-			</ListItem>
-			<Divider />
-			<ListItem button key={'Logout'}>
-				<ListItemIcon>
-					<LogoutIcon />
-				</ListItemIcon>
-				<ListItemText primary={"Logout"} />
-			</ListItem>
-
-			<Divider/>
-		</List>;
-		menuOpener = <IconButton
-			color="inherit"
-			aria-label="open drawer"
-			edge="end"
-			onClick={handleDrawerOpen}
-		>
-			<Avatar sx={{bgcolor: red[500], height: 60, width: 60}}
-					src="https://s1.eestatic.com/2018/12/07/deportes/futbol/futbol-copa_libertadores-boca_juniors_358976562_108958732_1706x960.jpg"
-					aria-label="recipe"/>
-		</IconButton>
-	}
+				<ListItem button key={'Logout'} onClick={async () => {
+					await onLogout();
+				}}>
+					<ListItemIcon>
+						<LogoutIcon />
+					</ListItemIcon>
+					<ListItemText primary={"Logout"} />
+				</ListItem>
+	
+				<Divider/>
+			</List>);
+			setMenuOpener(<><IconButton
+				color="inherit"
+				aria-label="open drawer"
+				edge="end"
+				onClick={handleDrawerOpen}
+			>
+				<Avatar sx={{bgcolor: red[500], height: 60, width: 60}}
+						src="https://s1.eestatic.com/2018/12/07/deportes/futbol/futbol-copa_libertadores-boca_juniors_358976562_108958732_1706x960.jpg"
+						aria-label="recipe"/>
+			</IconButton></>);
+		}
+	}, [user, open]);
 
 	return (
 		<Box height={87} sx={{ display: 'flex' }}>
