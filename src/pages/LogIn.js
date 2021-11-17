@@ -15,11 +15,10 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { loginUser } from "../utils/userUtils";
 
 
-
-export default function Login() {
+export default function LogIn() {
 	const history = useHistory();
 	const {firebase} = useContext(FirebaseContext)
 
@@ -34,7 +33,8 @@ export default function Login() {
 
 		try {
 			// await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
-			await login(emailAddress, password);
+            console.log(emailAddress, password);
+			await loginUser(emailAddress, password);
 			history.push(ROUTES.DASHBOARD);
 		} catch ({message}) {
 			setEmailAddress('');
@@ -53,12 +53,7 @@ export default function Login() {
 		<>
 			<Grid container component="main" sx={{ height: '100vh' }}>
 				<CssBaseline />
-				<Grid
-					item
-					xs={false}
-					sm={4}
-					md={7}
-					sx={{
+				<Grid item xs={false} sm={4} md={7} sx={{
 						backgroundImage: 'url(https://static.onecms.io/wp-content/uploads/sites/20/2017/05/alexandra-daddario-womens-health-1-2000.jpg)',
 						backgroundRepeat: 'no-repeat',
 						backgroundColor: (t) =>
@@ -68,15 +63,7 @@ export default function Login() {
 					}}
 				/>
 				<Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-					<Box
-						sx={{
-							my: 8,
-							mx: 4,
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-						}}
-					>
+					<Box sx={{my: 8, mx: 4, display: 'flex', flexDirection: 'column', alignItems: 'center',}}>
 						<Avatar sx={{ m: 1, bgcolor: '#ef6c00' }}>
 							<LockOutlinedIcon />
 						</Avatar>
@@ -84,36 +71,17 @@ export default function Login() {
 							Sign in
 						</Typography>
 						<Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
-							<TextField
-								margin="normal"
-								required
-								fullWidth
-								id="email"
-								label="Email Address"
-								name="email"
-								autoComplete="email"
-								autoFocus
+							<TextField margin="normal" required fullWidth id="email" label="Email Address"
+								name="email" autoComplete="email" autoFocus value={emailAddress} onChange={({target}) => setEmailAddress(target.value)}
 							/>
-							<TextField
-								margin="normal"
-								required
-								fullWidth
-								name="password"
-								label="Password"
-								type="password"
-								id="password"
-								autoComplete="current-password"
+							<TextField margin="normal" required fullWidth name="password" label="Password"
+								type="password" id="password" autoComplete="current-password" value={password} onChange={({target}) => setPassword(target.value)}
 							/>
 							<FormControlLabel
 								control={<Checkbox value="remember" color="primary" />}
 								label="Remember me"
 							/>
-							<Button
-								type="submit"
-								fullWidth
-								variant="contained"
-								sx={{ mt: 3, mb: 2 }}
-							>
+							<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
 								Sign In
 							</Button>
 							<Grid container>
@@ -133,41 +101,5 @@ export default function Login() {
 				</Grid>
 			</Grid>
 		</>
-		// <div>
-		// 	<div>
-		// 		titulo, imagen, o algo capaz?
-		// 	</div>
-		// 	<div>
-		// 		<p> Logo </p>
-		//
-		// 		{error && <p> Error </p>}
-		//
-		// 		<form onSubmit={handleLogin} method="POST">
-		// 			<input aria-label="Enter your email address" type="text" placeholder="Email Address"
-		// 				   className=""
-		// 				   onChange={({target}) => setEmailAddress(target.value)}
-		// 				   value={emailAddress}
-		// 			/>
-		// 			<input aria-label="Entero your password" type="password" placeholder="Password"
-		// 				   className=""
-		// 				   onChange={({target}) => setPassword(target.value)}
-		// 				   value={password}
-		// 			/>
-		//
-		// 		</form>
-		// 		<Button variant="contained" disableElevation>
-		// 			Disable elevation
-		// 		</Button>
-		// 	</div>
-		// 	<div>
-		// 		<p>
-		// 			Create account
-		// 			{/*Funcion de react para redirigir a otra pagina*/}
-		// 			<Link to={ROUTES.SIGNUP}>
-		// 				Sign up
-		// 			</Link>
-		// 		</p>
-		// 	</div>
-		// </div>
 	)
 }

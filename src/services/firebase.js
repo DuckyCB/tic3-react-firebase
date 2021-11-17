@@ -36,28 +36,41 @@ export const login = async (email, password) => {
     // }
 }
 
-export const signUp = async (email, password, firstName, lastName) => {
+export const signUp = async (email, password, firstName, lastName, username) => {
 
-    if (!email || !password || !firstName || !lastName) {
+    if (!email || !password || !firstName || !lastName || !username) {
         throw new Error('empty field');
     }
 
     const auth = getAuth();
 
     try {
+        await validateUsername(username);
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        saveUserInfo(userCredential.user.uid, email, firstName, lastName);
+        await saveUserInfo(userCredential.user.uid, email, firstName, lastName, username);
         return userCredential.user;
     } catch (err) {
         throw err;
     }
 };
 
-const saveUserInfo = async (userId, email, firstName, lastName) => {
+const saveUserInfo = async (userId, email, firstName, lastName, username) => {
 
     await setDoc(doc(db, 'users', userId), {
         email,
         firstName,
-        lastName
+        lastName,
+        username,
+        postsCount: 0,
+        subscriptions: []
     });
+}
+
+const validateUsername = async (username) => {
+    const q = query(collection(db, 'users'), where('username', '==', username));
+    const userResults = await getDocs(q);
+    const users = userResults.docs.map((user) => user.data);
+    if (users.length >= 1) {
+        throw new Error('username already exists');
+    }
 }

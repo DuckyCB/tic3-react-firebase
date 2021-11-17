@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Link} from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -23,9 +24,12 @@ import {CardMedia} from "@mui/material";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import {ColorModeContext} from "../app";
+import * as ROUTES from "../constants/routes";
+import {red} from "@mui/material/colors";
+import Avatar from "@mui/material/Avatar";
 
 const drawerWidth = 240;
-
+// TODO: Obtener isntancia del usuario actual
 // const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 // 	({ theme, open }) => ({
 // 		flexGrow: 1,
@@ -77,13 +81,17 @@ export default function PersistentDrawerRight() {
 	const handleDrawerOpen = () => {
 		setOpen(true);
 	};
+	let user = {
+		id: 'l8pt7BnTT5XVCSlsxshTWJ7jpPn1',
+		avatar: 'https://s1.eestatic.com/2018/12/07/deportes/futbol/futbol-copa_libertadores-boca_juniors_358976562_108958732_1706x960.jpg'
+    };
 
 	const handleDrawerClose = () => {
 		setOpen(false);
 	};
 	let isLoggedIn = true;
 	let sidebar, menuOpener;
-	if (!isLoggedIn) {
+	if (!user) {
 		sidebar =
 			<List>
 				<ListItem button key={'Login'}>
@@ -92,11 +100,11 @@ export default function PersistentDrawerRight() {
 					</ListItemIcon>
 					<ListItemText primary={'Login'} />
 				</ListItem>
-				<ListItem button key={'Signup'}>
+				<ListItem button key={'SignUp'}>
 					<ListItemIcon>
 	                    <SaveAltIcon />
 					</ListItemIcon>
-					<ListItemText primary={"Signup"} />
+					<ListItemText primary={"SignUp"} />
 				</ListItem>
 
 				<Divider />
@@ -135,12 +143,9 @@ export default function PersistentDrawerRight() {
 			edge="end"
 			onClick={handleDrawerOpen}
 		>
-			<CardMedia
-				component="img"
-				alt="Image not fetched"
-				height={60}
-				image={"https://avatars.githubusercontent.com/u/66039600?s=64&v=4"}
-			/>
+			<Avatar sx={{bgcolor: red[500], height: 60, width: 60}}
+					src="https://s1.eestatic.com/2018/12/07/deportes/futbol/futbol-copa_libertadores-boca_juniors_358976562_108958732_1706x960.jpg"
+					aria-label="recipe"/>
 		</IconButton>
 	}
 
@@ -149,9 +154,9 @@ export default function PersistentDrawerRight() {
 			<CssBaseline />
 			<AppBar enableColorOnDark color="orangebg" sx={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0))'}} position="fixed" open={open}>
 				<Toolbar>
-					<a href="https://www.reddit.com/">
-						<img src="kinchoo.png" style={{margin:10}} height={60} alt="Kinchoo"/>
-					</a>
+					<Link to={ROUTES.DASHBOARD}>
+						<img src="../../kinchoo.png" style={{margin:10}} height={60} alt="Kinchoo"/>
+					</Link>
 					<Typography sx={{ flexGrow: 1 }} component="div">
 					</Typography>
 					<ColorModeContext.Consumer>
