@@ -25,44 +25,45 @@ export default function SignUp() {
 
 	const [emailAddress, setEmailAddress] = useState('');
 	const [password, setPassword] = useState('');
-    const [usernameError, setUsernameError] = useState(false);
+	const [usernameError, setUsernameError] = useState(false);
+	const [avatar, setAvatar] = useState('');
 
 	// const [error, setError] = useState('');
-    const { register, handleSubmit, setError, formState: { errors }, clearErrors } = useForm();
+	const { register, handleSubmit, setError, formState: { errors }, clearErrors } = useForm();
 
-    const usernameRef = useRef(null);
+	const usernameRef = useRef(null);
 	const isInvalid = password === '' || emailAddress === '';
-    const { onChange, ...rest} = register('username');
+	const { onChange, ...rest} = register('username');
 
 	const handleSignup = async (event) => {
-        event.preventDefault();
-        
+		event.preventDefault();
+
 		try {
-            if (hasWhiteSpace(username)) {
-                setUsernameError(true);
-                setError('username', {
-                    type: 'manual',
-                    message: 'username can\'t have white spaces'
-                });
-                return;
-            }
-			const user = await signUp(emailAddress, password, firstName, lastName, username);
-            await loginUser(emailAddress, password);
+			if (hasWhiteSpace(username)) {
+				setUsernameError(true);
+				setError('username', {
+					type: 'manual',
+					message: 'username can\'t have white spaces'
+				});
+				return;
+			}
+			const user = await signUp(emailAddress, password, firstName, lastName, username, avatar);
+			await loginUser(emailAddress, password);
 			history.push(ROUTES.DASHBOARD);
 		} catch ({message, code}) {
-            if (message === 'username already exists') {
-                setUsernameError(true);
-                setError('username', {
-                    type: 'manual',
-                    message: 'username already exists'
-                });
-            }
+			if (message === 'username already exists') {
+				setUsernameError(true);
+				setError('username', {
+					type: 'manual',
+					message: 'username already exists'
+				});
+			}
 			// setError(code);
 			console.error(message);
 		}
 	};
 
-    const hasWhiteSpace = str => str.indexOf(' ') >= 0;
+	const hasWhiteSpace = str => str.indexOf(' ') >= 0;
 
 	useEffect(() => {
 		document.title = 'Kinchoo signup';
@@ -91,36 +92,42 @@ export default function SignUp() {
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={6}>
 								<TextField autoComplete="given-name" name="firstName" required fullWidth id="firstName"
-									label="First Name" autoFocus value={firstName}
-									onChange={({target}) => setFirstName(target.value)}
+										   label="First Name" autoFocus value={firstName}
+										   onChange={({target}) => setFirstName(target.value)}
 								/>
 							</Grid>
 							<Grid item xs={12} sm={6}>
 								<TextField required fullWidth id="lastName" label="Last Name" name="lastName"
 										   autoComplete="family-name" value={lastName}
-									onChange={({target}) => setLastName(target.value)}
+										   onChange={({target}) => setLastName(target.value)}
 								/>
 							</Grid>
-                            <Grid item xs={12}>
-                                <TextField required ref={usernameRef} error={usernameError} helperText={errors.username && errors.username.message} fullWidth id="username" label="username" value={username}
-                                 onChange={({target}) => {
-                                     clearErrors('username');
-                                     setUsernameError(false);
-                                     setUsername(target.value);
-                                    }}
-                                    {...rest}
-                                />
-                            </Grid>
+							<Grid item xs={12}>
+								<TextField required ref={usernameRef} error={usernameError} helperText={errors.username && errors.username.message} fullWidth id="username" label="Username" value={username}
+										   onChange={({target}) => {
+											   clearErrors('username');
+											   setUsernameError(false);
+											   setUsername(target.value);
+										   }}
+										   {...rest}
+								/>
+							</Grid>
 							<Grid item xs={12}>
 								<TextField required fullWidth id="email" label="Email Address" name="email"
-									autoComplete="email" value={emailAddress}
-									onChange={({target}) => setEmailAddress(target.value)}
+										   autoComplete="email" value={emailAddress}
+										   onChange={({target}) => setEmailAddress(target.value)}
 								/>
 							</Grid>
-							<Grid item xs={8}>
+							<Grid item xs={12}>
 								<TextField required fullWidth name="password" label="Password" type="password"
-									id="password" autoComplete="new-password" value={password}
-									onChange={({target}) => setPassword(target.value)}
+										   id="password" autoComplete="new-password" value={password}
+										   onChange={({target}) => setPassword(target.value)}
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField fullWidth name="avatar" label="Avatar link" type="avatar"
+										   id="avatar" value={avatar}
+										   onChange={({target}) => setAvatar(target.value)}
 								/>
 							</Grid>
 						</Grid>
@@ -140,3 +147,4 @@ export default function SignUp() {
 		</>
 	)
 }
+

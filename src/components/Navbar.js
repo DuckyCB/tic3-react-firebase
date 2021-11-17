@@ -87,10 +87,7 @@ export default function Navbar({user, onLogout}) {
 	const handleDrawerOpen = () => {
 		setOpen(true);
 	};
-	// let user = {
-	// 	id: 'l8pt7BnTT5XVCSlsxshTWJ7jpPn1',
-	// 	avatar: 'https://s1.eestatic.com/2018/12/07/deportes/futbol/futbol-copa_libertadores-boca_juniors_358976562_108958732_1706x960.jpg'
-    // };
+
 
 	const handleDrawerClose = () => {
 		setOpen(false);
@@ -160,7 +157,7 @@ export default function Navbar({user, onLogout}) {
 				onClick={handleDrawerOpen}
 			>
 				<Avatar sx={{bgcolor: red[500], height: 60, width: 60}}
-						src="https://s1.eestatic.com/2018/12/07/deportes/futbol/futbol-copa_libertadores-boca_juniors_358976562_108958732_1706x960.jpg"
+						src={user.avatar}
 						aria-label="recipe"/>
 			</IconButton></>);
 		}

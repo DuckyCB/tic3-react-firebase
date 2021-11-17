@@ -36,7 +36,7 @@ export const login = async (email, password) => {
     // }
 }
 
-export const signUp = async (email, password, firstName, lastName, username) => {
+export const signUp = async (email, password, firstName, lastName, username, avatar) => {
 
     if (!email || !password || !firstName || !lastName || !username) {
         throw new Error('empty field');
@@ -47,14 +47,14 @@ export const signUp = async (email, password, firstName, lastName, username) => 
     try {
         await validateUsername(username);
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        await saveUserInfo(userCredential.user.uid, email, firstName, lastName, username);
+        await saveUserInfo(userCredential.user.uid, email, firstName, lastName, username, avatar);
         return userCredential.user;
     } catch (err) {
         throw err;
     }
 };
 
-const saveUserInfo = async (userId, email, firstName, lastName, username) => {
+const saveUserInfo = async (userId, email, firstName, lastName, username, avatar) => {
 
     await setDoc(doc(db, 'users', userId), {
         email,
@@ -62,7 +62,8 @@ const saveUserInfo = async (userId, email, firstName, lastName, username) => {
         lastName,
         username,
         postsCount: 0,
-        subscriptions: []
+        subscriptions: [],
+        avatar
     });
 }
 
