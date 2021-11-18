@@ -23,9 +23,11 @@ export default function LogIn() {
 	const {firebase} = useContext(FirebaseContext)
 
 	const [emailAddress, setEmailAddress] = useState('');
+	// const [loginError, setLoginError] = useState(false);
 	const [password, setPassword] = useState('');
 
 	const [error, setError] = useState('');
+	const [errorMessage, setErrorMessage] = useState('');
 	const isInvalid = password === '' || emailAddress === '';
 
 	const [open, setOpen] = React.useState(false);
@@ -49,8 +51,9 @@ export default function LogIn() {
 		} catch ({message}) {
 			setEmailAddress('');
 			setPassword('');
+			// Se podria cambiar este mensaje de error
 			setError(message);
-			console.error(message);
+			// console.error(message);
 		}
 	};
 
@@ -81,8 +84,12 @@ export default function LogIn() {
 							Sign in
 						</Typography>
 						<Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
-							<TextField margin="normal" required fullWidth id="email" label="Email Address"
-								name="email" autoComplete="email" autoFocus value={emailAddress} onChange={({target}) => setEmailAddress(target.value)}
+							<TextField margin="normal" required fullWidth id="email" label="Email Address" name="email"
+									   autoComplete="email" autoFocus value={emailAddress} error={error}
+									   onChange={({target}) => {
+										   setEmailAddress(target.value);
+										   setError('');
+									   }} helperText={error}
 							/>
 							<TextField margin="normal" required fullWidth name="password" label="Password"
 								type="password" id="password" autoComplete="current-password" value={password} onChange={({target}) => setPassword(target.value)}
