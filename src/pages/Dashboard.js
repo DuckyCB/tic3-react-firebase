@@ -10,6 +10,7 @@ import CreateNewSubKinchoo from "../components/sidebar/CreateNewSubKinchoo";
 import { fetchUserData, logout } from "../utils/userUtils";
 import { auth } from "../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth"
+import AllSubKinchoos from "../components/sidebar/AllSubKinchoos";
 
 export default function Dashboard() {
 	const [posts, setPosts] = useState([]);
@@ -72,6 +73,7 @@ export default function Dashboard() {
 						<TopSubKinchoos/>
 						{userData ? <CreateNewSubKinchoo/> : null}
 						<AboutUs/>
+						<AllSubKinchoos/>
 					</Stack>
 				</Grid>
 			</Grid>
