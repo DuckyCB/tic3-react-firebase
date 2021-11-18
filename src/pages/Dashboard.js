@@ -59,7 +59,6 @@ export default function Dashboard() {
 
 	return (
 		<>
-			{/*<Navbar user={userData} onLogout={logoutUser}/>*/}
 			<Grid container spacing={2} justifyContent="center" alignItems="flex-start">
 				<Grid item xs={8}>
 					{posts ? (
@@ -76,7 +75,6 @@ export default function Dashboard() {
 					</Stack>
 				</Grid>
 			</Grid>
-            {userData ? JSON.stringify(userData) : <p>'no user logged in'</p>}
 		</>
 	)
 }
