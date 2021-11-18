@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import styled from "@emotion/styled";
 import Box from "@mui/material/Box";
 import {Link as RouterLink} from "react-router-dom";
-import {addDoc, collection, onSnapshot, query, Timestamp} from "firebase/firestore";
+import {addDoc, collection, onSnapshot, orderBy, query, Timestamp} from "firebase/firestore";
 import {auth, db} from "../lib/firebase";
 import {formatMinutes} from "../utils/date-utils";
 import Button from "@mui/material/Button";
@@ -40,7 +40,7 @@ export default function Comments({post}) {
     useEffect(() => {
         async function getComments() {
             try {
-                const q = query(collection(db, 'posts', post.id, 'comments'));
+                const q = query(collection(db, 'posts', post.id, 'comments'), orderBy("createdAt", "asc"));
                 onSnapshot(q, (querySnapshot) => {
                     const _comments = [];
                     querySnapshot.forEach((doc) => {
