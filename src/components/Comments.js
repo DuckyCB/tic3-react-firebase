@@ -4,11 +4,13 @@ import styled from "@emotion/styled";
 import Box from "@mui/material/Box";
 import {Link as RouterLink} from "react-router-dom";
 import {addDoc, collection, onSnapshot, query, Timestamp} from "firebase/firestore";
-import {db} from "../lib/firebase";
+import {auth, db} from "../lib/firebase";
 import {formatMinutes} from "../utils/date-utils";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {useAuthState} from "react-firebase-hooks/auth";
+import {fetchUserData} from "../utils/userUtils";
 
 
 function Comment({content, postedBy, createdAt}) {
@@ -31,10 +33,9 @@ function Comment({content, postedBy, createdAt}) {
 export default function Comments({post}) {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState([]);
-    const [user, setUser] = useState(null);
+    const [userData, setUserData] = useState(null);
+    const [user, loading, error] = useAuthState(auth);
 
-    // TODO: Obtener usuario logeado
-    // const user = {username: 'kinko'}
 
     useEffect(() => {
         async function getComments() {
@@ -51,21 +52,17 @@ export default function Comments({post}) {
                 console.error(err);
             }
         }
-        const getSignedInUser = async () => {
-            try {
-                const auth = getAuth();
-                onAuthStateChanged(auth, (user) => {
-                    setUser(user);
-                    console.log(user);
-                });
-            } catch {
-                console.error('error when fetching user');
-            }
-        };
-        getComments();
-        getSignedInUser();
 
-    },[]);
+
+        const fetchData = async () => {
+            if (loading || !user) return;
+            setUserData(await fetchUserData(user));
+        }
+
+        fetchData();
+        getComments();
+
+    }, [user, loading]);
 
     async function handleNewComment() {
         const docRef = await addDoc(collection(db, 'posts', post.id, 'comments'), {
@@ -73,7 +70,7 @@ export default function Comments({post}) {
             createdAt: Timestamp.fromDate(new Date()),
             downVotes: 0,
             upVotes: 0,
-            postedBy: /*user.username*/ 'kinko'
+            postedBy: userData.username
         });
         setNewComment('');
     };

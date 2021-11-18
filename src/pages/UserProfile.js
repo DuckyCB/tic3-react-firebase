@@ -99,7 +99,7 @@ export default function UserProfile() {
 	return (
 		user ?
 			<>
-				<Navbar/>
+				{/*<Navbar/>*/}
 				<Grid container spacing={2} justifyContent="center" alignItems="flex-start">
 					<Grid item xs={8}>
 						{posts ? (

@@ -1,7 +1,6 @@
-import { signInWithEmailAndPassword } from "@firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../lib/firebase";
-import { auth } from "../lib/firebase";
+import {signInWithEmailAndPassword} from "@firebase/auth";
+import {doc, getDoc} from "firebase/firestore";
+import {auth, db} from "../lib/firebase";
 
 // returns user data if user is signed in and returns null otherwise
 export const fetchUserData = async (user) => {
@@ -11,7 +10,7 @@ export const fetchUserData = async (user) => {
 
     const docRef = doc(db, 'users', user.uid);
     const result = await getDoc(docRef);
-    return result.data();
+    return {id: user.uid, ...result.data()};
 
 };
 

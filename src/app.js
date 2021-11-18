@@ -1,8 +1,12 @@
-import {lazy, Suspense} from "react";
+import {lazy, Suspense, useEffect, useState} from "react";
 import * as React from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import * as ROUTES from './constants/routes'
 import {createTheme, ThemeProvider} from "@mui/material";
+import Navbar from "./components/Navbar";
+import {fetchUserData, logout} from "./utils/userUtils";
+import {useAuthState} from "react-firebase-hooks/auth";
+import {auth} from "./lib/firebase";
 
 
 const Dashboard = lazy(() => import('./pages/Dashboard'))
@@ -26,9 +30,26 @@ const getDesignTokens = (mode) => ({
     },
 });
 function App () {
+    const [userData, setUserData] = useState(null);
+    const [user, loading, error] = useAuthState(auth);
+    useEffect(() => {
+        const fetchData = async () => {
+            if (loading || !user) return;
+            setUserData(await fetchUserData(user));
+        }
+
+        fetchData();
+    }, [user, loading]);
+
+    const logoutUser = async () => {
+        await logout();
+        setUserData(null);
+    }
     return (
         <>
+
             <Router>
+                <Navbar user={userData} onLogout={logoutUser}/>
                 <Suspense fallback={<p> Loading ... </p>}>
                     <Switch>
                         <Route exact path={ROUTES.DASHBOARD} component={Dashboard}/>
