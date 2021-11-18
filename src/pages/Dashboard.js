@@ -1,4 +1,3 @@
-import Navbar from "../components/Navbar";
 import React, {useEffect, useState} from "react";
 import Timeline from "../components/Timeline";
 import {Grid, Stack} from "@mui/material";
@@ -9,7 +8,6 @@ import {db} from "../lib/firebase";
 import SkeletonPosts from "../components/skeleton/SkeletonPosts";
 import CreateNewSubKinchoo from "../components/sidebar/CreateNewSubKinchoo";
 import { fetchUserData, logout } from "../utils/userUtils";
-import { set } from "react-hook-form";
 import { auth } from "../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth"
 
