@@ -87,10 +87,11 @@ export default function Comments({post}) {
                         <Grid item xs={10}>
                             <TextField fullWidth id="outlined-textarea" label="New comment" placeholder="Excelent post!" multiline
                                        value={newComment}
+                                       disabled={!user}
                                        onChange={({target}) => setNewComment(target.value)}/>
                         </Grid>
                         <Grid item xs={2} container>
-                            <Button variant="contained" sx={{height: '100%', width: '100%'}} onClick={handleNewComment}>+</Button>
+                            <Button disabled={!user} variant="contained" sx={{height: '100%', width: '100%'}} onClick={handleNewComment}>+</Button>
                         </Grid>
                     </Grid>
                 </Box>
