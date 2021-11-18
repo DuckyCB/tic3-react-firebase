@@ -6,7 +6,7 @@ export default function AboutUs() {
 	return (
 		<Paper sx={{width: 8/10}}>
 			<Typography sx={{padding: 2}}>
-				About us: Empresa internacional dedicada a crear subkinchoos lo menos cringes posibles.
+				Blog destinado al placer de las masas
 			</Typography>
 		</Paper>
 	)
