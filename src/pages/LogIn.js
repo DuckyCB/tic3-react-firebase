@@ -1,7 +1,6 @@
-import {useHistory, Link} from "react-router-dom";
+import {useHistory, Link as RouterLink} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import FirebaseContext from "../context/firebase";
-import {login} from "../services/firebase";
 import * as ROUTES from "../constants/routes";
 import * as React from 'react';
 import Button from '@mui/material/Button';
@@ -16,6 +15,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { loginUser } from "../utils/userUtils";
+import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 
 
 export default function LogIn() {
@@ -27,6 +27,16 @@ export default function LogIn() {
 
 	const [error, setError] = useState('');
 	const isInvalid = password === '' || emailAddress === '';
+
+	const [open, setOpen] = React.useState(false);
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
@@ -86,14 +96,32 @@ export default function LogIn() {
 							</Button>
 							<Grid container>
 								<Grid item xs color={"white"}>
-									<Link href="#" color="white">
+									<Typography onClick={handleClickOpen} color="inherit">
 										Forgot password?
-									</Link>
+									</Typography>
+									<Dialog open={open} onClose={handleClose}
+										aria-labelledby="alert-dialog-title"
+										aria-describedby="alert-dialog-description"
+									>
+										<DialogTitle id="alert-dialog-title">
+											{"Forgot password?"}
+										</DialogTitle>
+										<DialogContent>
+											<DialogContentText id="alert-dialog-description">
+												¯\_(ツ)_/¯
+											</DialogContentText>
+										</DialogContent>
+										<DialogActions>
+											<Button onClick={handleClose} autoFocus>
+												Agree
+											</Button>
+										</DialogActions>
+									</Dialog>
 								</Grid>
 								<Grid item>
-									<Link href="#" underline="hover" >
-										{"Don't have an account? Sign Up"}
-									</Link>
+									<Typography component={RouterLink} to={ROUTES.SIGNUP} color="inherit">
+										Don't have an account? Sign Up
+									</Typography>
 								</Grid>
 							</Grid>
 						</Box>
