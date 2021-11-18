@@ -89,10 +89,10 @@ export default function LogIn() {
 									   onChange={({target}) => {
 										   setEmailAddress(target.value);
 										   setError('');
-									   }} helperText={error}
+									   }} helperText={"Error in Password or Email"}
 							/>
 							<TextField margin="normal" required fullWidth name="password" label="Password"
-								type="password" id="password" autoComplete="current-password" value={password} onChange={({target}) => setPassword(target.value)}
+								type="password" id="password" autoComplete="current-password" value={password} error={error} onChange={({target}) => setPassword(target.value)}
 							/>
 							<FormControlLabel
 								control={<Checkbox value="remember" color="primary" />}
