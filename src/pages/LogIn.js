@@ -1,7 +1,6 @@
-import {useHistory, Link} from "react-router-dom";
+import {useHistory, Link as RouterLink} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import FirebaseContext from "../context/firebase";
-import {login} from "../services/firebase";
 import * as ROUTES from "../constants/routes";
 import * as React from 'react';
 import Button from '@mui/material/Button';
@@ -16,6 +15,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { loginUser } from "../utils/userUtils";
+import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 
 
 export default function LogIn() {
@@ -23,10 +23,22 @@ export default function LogIn() {
 	const {firebase} = useContext(FirebaseContext)
 
 	const [emailAddress, setEmailAddress] = useState('');
+	// const [loginError, setLoginError] = useState(false);
 	const [password, setPassword] = useState('');
 
 	const [error, setError] = useState('');
+	const [errorMessage, setErrorMessage] = useState('');
 	const isInvalid = password === '' || emailAddress === '';
+
+	const [open, setOpen] = React.useState(false);
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
@@ -39,8 +51,9 @@ export default function LogIn() {
 		} catch ({message}) {
 			setEmailAddress('');
 			setPassword('');
+			// Se podria cambiar este mensaje de error
 			setError(message);
-			console.error(message);
+			// console.error(message);
 		}
 	};
 
@@ -54,7 +67,7 @@ export default function LogIn() {
 			<Grid container component="main" sx={{ height: '100vh' }}>
 				<CssBaseline />
 				<Grid item xs={false} sm={4} md={7} sx={{
-						backgroundImage: 'url(https://static.onecms.io/wp-content/uploads/sites/20/2017/05/alexandra-daddario-womens-health-1-2000.jpg)',
+						backgroundImage: 'url(https://wallpapercave.com/wp/wp8554091.jpg)',
 						backgroundRepeat: 'no-repeat',
 						backgroundColor: (t) =>
 							t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -71,11 +84,15 @@ export default function LogIn() {
 							Sign in
 						</Typography>
 						<Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
-							<TextField margin="normal" required fullWidth id="email" label="Email Address"
-								name="email" autoComplete="email" autoFocus value={emailAddress} onChange={({target}) => setEmailAddress(target.value)}
+							<TextField margin="normal" required fullWidth id="email" label="Email Address" name="email"
+									   autoComplete="email" autoFocus value={emailAddress} error={error}
+									   onChange={({target}) => {
+										   setEmailAddress(target.value);
+										   setError('');
+									   }} helperText={"Error in Password or Email"}
 							/>
 							<TextField margin="normal" required fullWidth name="password" label="Password"
-								type="password" id="password" autoComplete="current-password" value={password} onChange={({target}) => setPassword(target.value)}
+								type="password" id="password" autoComplete="current-password" value={password} error={error} onChange={({target}) => setPassword(target.value)}
 							/>
 							<FormControlLabel
 								control={<Checkbox value="remember" color="primary" />}
@@ -86,14 +103,32 @@ export default function LogIn() {
 							</Button>
 							<Grid container>
 								<Grid item xs color={"white"}>
-									<Link href="#" color="white">
+									<Typography onClick={handleClickOpen} color="inherit">
 										Forgot password?
-									</Link>
+									</Typography>
+									<Dialog open={open} onClose={handleClose}
+										aria-labelledby="alert-dialog-title"
+										aria-describedby="alert-dialog-description"
+									>
+										<DialogTitle id="alert-dialog-title">
+											{"Forgot password?"}
+										</DialogTitle>
+										<DialogContent>
+											<DialogContentText id="alert-dialog-description">
+												¯\_(ツ)_/¯
+											</DialogContentText>
+										</DialogContent>
+										<DialogActions>
+											<Button onClick={handleClose} autoFocus>
+												Agree
+											</Button>
+										</DialogActions>
+									</Dialog>
 								</Grid>
 								<Grid item>
-									<Link href="#" underline="hover" >
-										{"Don't have an account? Sign Up"}
-									</Link>
+									<Typography component={RouterLink} to={ROUTES.SIGNUP} color="inherit">
+										Don't have an account? Sign Up
+									</Typography>
 								</Grid>
 							</Grid>
 						</Box>

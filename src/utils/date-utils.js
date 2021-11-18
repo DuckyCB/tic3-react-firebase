@@ -13,6 +13,6 @@ export function formatMinutes(dateFS){
 	const day = dateJS.getUTCDate();
 	const year = dateJS.getUTCFullYear();
 	const hour = dateJS.getUTCHours();
-	const minutes = dateJS.getUTCMinutes();
-	return hour + ':' + minutes + ' ' + day + "/" + month + "/" + year;
+	const minutes = dateJS.getUTCMinutes() > 9 ? dateJS.getUTCMinutes() : "0" + dateJS.getUTCMinutes();
+	return ((24 + hour - 3) % 24) + ':' + minutes + ' ' + day + "/" + month + "/" + year;
 }

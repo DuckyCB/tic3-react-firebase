@@ -32,7 +32,7 @@ export default function FullPost() {
 
     return (
         <>
-            <Navbar />
+            {/*<Navbar />*/}
             <Stack spacing={4} justifyContent="center" alignItems="center">
                 {post !== undefined ?
                     <Post post={post} fullRender="true" key={post.id}/>

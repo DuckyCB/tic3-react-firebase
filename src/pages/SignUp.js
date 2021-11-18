@@ -1,4 +1,4 @@
-import {Link, useHistory} from "react-router-dom";
+import {Link as RouterLink, Link, useHistory} from "react-router-dom";
 import {useContext, useEffect, useState, useRef} from "react";
 import FirebaseContext from "../context/firebase";
 import * as ROUTES from "../constants/routes";
@@ -24,45 +24,75 @@ export default function SignUp() {
 	const [lastName, setLastName] = useState('');
 
 	const [emailAddress, setEmailAddress] = useState('');
+	const [emailError, setEmailError] = useState(false);
 	const [password, setPassword] = useState('');
-    const [usernameError, setUsernameError] = useState(false);
+	const [passwordError, setPasswordError] = useState(false);
+	const [usernameError, setUsernameError] = useState(false);
+	const [avatar, setAvatar] = useState('');
+
 
 	// const [error, setError] = useState('');
-    const { register, handleSubmit, setError, formState: { errors }, clearErrors } = useForm();
+	const { register, handleSubmit, setError, formState: { errors }, clearErrors } = useForm();
 
-    const usernameRef = useRef(null);
+	const usernameRef = useRef(null);
 	const isInvalid = password === '' || emailAddress === '';
-    const { onChange, ...rest} = register('username');
+	const { onChange, ...rest} = register('username');
 
 	const handleSignup = async (event) => {
-        event.preventDefault();
-        
+		event.preventDefault();
+
 		try {
-            if (hasWhiteSpace(username)) {
-                setUsernameError(true);
-                setError('username', {
+			if (hasWhiteSpace(username) || username.length < 4) {
+				setUsernameError(true);
+				setError('username', {
+					type: 'manual',
+					message: 'username can\'t have white spaces or shorter than 4 characters'
+				});
+				return;
+			} else {
+				setUsernameError(false);
+			}
+
+			if (!hasAt(emailAddress)) {
+				setEmailError(true);
+				setError('password', {
+					type: 'manual',
+					message: 'Invalid email'
+				});
+				return;
+			} else {
+				setEmailError(false);
+			}
+			if (password.length < 6) {
+                setPasswordError(true);
+                setError('password', {
                     type: 'manual',
-                    message: 'username can\'t have white spaces'
+                    message: 'Password must be at least 6 characters'
                 });
                 return;
-            }
-			const user = await signUp(emailAddress, password, firstName, lastName, username);
-            await loginUser(emailAddress, password);
+            } else {
+				setPasswordError(false);
+			}
+
+			const user = await signUp(emailAddress, password, firstName, lastName, username, avatar);
+			await loginUser(emailAddress, password);
 			history.push(ROUTES.DASHBOARD);
 		} catch ({message, code}) {
-            if (message === 'username already exists') {
-                setUsernameError(true);
-                setError('username', {
-                    type: 'manual',
-                    message: 'username already exists'
-                });
-            }
+			if (message === 'username already exists') {
+				setUsernameError(true);
+				setError('username', {
+					type: 'manual',
+					message: 'username already exists'
+				});
+			}
 			// setError(code);
 			console.error(message);
 		}
 	};
-
-    const hasWhiteSpace = str => str.indexOf(' ') >= 0;
+	const hasAt = (email) => {
+        return email.includes('@');
+    };
+	const hasWhiteSpace = str => str.indexOf(' ') >= 0;
 
 	useEffect(() => {
 		document.title = 'Kinchoo signup';
@@ -87,51 +117,57 @@ export default function SignUp() {
 					<Typography component="h1" variant="h5">
 						Sign up
 					</Typography>
-					<Box component="form" noValidate onSubmit={handleSignup} sx={{ mt: 3 }}>
+					<Box component="form"  onSubmit={handleSignup} sx={{ mt: 3 }}>
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={6}>
 								<TextField autoComplete="given-name" name="firstName" required fullWidth id="firstName"
-									label="First Name" autoFocus value={firstName}
-									onChange={({target}) => setFirstName(target.value)}
+										   label="First Name" autoFocus value={firstName}
+										   onChange={({target}) => setFirstName(target.value)}
 								/>
 							</Grid>
 							<Grid item xs={12} sm={6}>
 								<TextField required fullWidth id="lastName" label="Last Name" name="lastName"
 										   autoComplete="family-name" value={lastName}
-									onChange={({target}) => setLastName(target.value)}
+										   onChange={({target}) => setLastName(target.value)}
 								/>
 							</Grid>
-                            <Grid item xs={12}>
-                                <TextField required ref={usernameRef} error={usernameError} helperText={errors.username && errors.username.message} fullWidth id="username" label="username" value={username}
-                                 onChange={({target}) => {
-                                     clearErrors('username');
-                                     setUsernameError(false);
-                                     setUsername(target.value);
-                                    }}
-                                    {...rest}
-                                />
-                            </Grid>
+							<Grid item xs={12}>
+								<TextField required ref={usernameRef} error={usernameError} helperText={errors.username && errors.username.message} fullWidth id="username" label="Username" value={username}
+										   onChange={({target}) => {
+											   clearErrors('username');
+											   setUsernameError(false);
+											   setUsername(target.value);
+										   }}
+										   {...rest}
+								/>
+							</Grid>
 							<Grid item xs={12}>
 								<TextField required fullWidth id="email" label="Email Address" name="email"
-									autoComplete="email" value={emailAddress}
-									onChange={({target}) => setEmailAddress(target.value)}
+										   autoComplete="email" value={emailAddress} error={emailError} helperText={emailError ? "Invalid email" : ""}
+										   onChange={({target}) => setEmailAddress(target.value)}
 								/>
 							</Grid>
-							<Grid item xs={8}>
+							<Grid item xs={12}>
 								<TextField required fullWidth name="password" label="Password" type="password"
-									id="password" autoComplete="new-password" value={password}
-									onChange={({target}) => setPassword(target.value)}
+										   id="password" autoComplete="new-password" value={password} error={passwordError} helperText={passwordError && errors.password.message}
+										   onChange={({target}) => setPassword(target.value)}
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField fullWidth name="avatar" label="Avatar link" type="avatar"
+										   id="avatar" value={avatar}
+										   onChange={({target}) => setAvatar(target.value)}
 								/>
 							</Grid>
 						</Grid>
-						<Button color= "inherit" type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+						<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
 							Sign Up
 						</Button>
 						<Grid container justifyContent="flex-end">
 							<Grid item>
-								<Link href="#" variant="body2">
+								<Typography component={RouterLink} to={ROUTES.LOGIN} color="inherit">
 									Already have an account? Sign in
-								</Link>
+								</Typography>
 							</Grid>
 						</Grid>
 					</Box>
@@ -140,3 +176,4 @@ export default function SignUp() {
 		</>
 	)
 }
+
