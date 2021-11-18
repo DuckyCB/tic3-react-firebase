@@ -24,9 +24,12 @@ export default function SignUp() {
 	const [lastName, setLastName] = useState('');
 
 	const [emailAddress, setEmailAddress] = useState('');
+	const [emailError, setEmailError] = useState(false);
 	const [password, setPassword] = useState('');
+	const [passwordError, setPasswordError] = useState(false);
 	const [usernameError, setUsernameError] = useState(false);
 	const [avatar, setAvatar] = useState('');
+
 
 	// const [error, setError] = useState('');
 	const { register, handleSubmit, setError, formState: { errors }, clearErrors } = useForm();
@@ -39,14 +42,38 @@ export default function SignUp() {
 		event.preventDefault();
 
 		try {
-			if (hasWhiteSpace(username)) {
+			if (hasWhiteSpace(username) || username.length < 4) {
 				setUsernameError(true);
 				setError('username', {
 					type: 'manual',
-					message: 'username can\'t have white spaces'
+					message: 'username can\'t have white spaces or shorter than 4 characters'
 				});
 				return;
+			} else {
+				setUsernameError(false);
 			}
+
+			if (!hasAt(emailAddress)) {
+				setEmailError(true);
+				setError('password', {
+					type: 'manual',
+					message: 'Invalid email'
+				});
+				return;
+			} else {
+				setEmailError(false);
+			}
+			if (password.length < 6) {
+                setPasswordError(true);
+                setError('password', {
+                    type: 'manual',
+                    message: 'Password must be at least 6 characters'
+                });
+                return;
+            } else {
+				setPasswordError(false);
+			}
+
 			const user = await signUp(emailAddress, password, firstName, lastName, username, avatar);
 			await loginUser(emailAddress, password);
 			history.push(ROUTES.DASHBOARD);
@@ -62,7 +89,9 @@ export default function SignUp() {
 			console.error(message);
 		}
 	};
-
+	const hasAt = (email) => {
+        return email.includes('@');
+    };
 	const hasWhiteSpace = str => str.indexOf(' ') >= 0;
 
 	useEffect(() => {
@@ -88,7 +117,7 @@ export default function SignUp() {
 					<Typography component="h1" variant="h5">
 						Sign up
 					</Typography>
-					<Box component="form" noValidate onSubmit={handleSignup} sx={{ mt: 3 }}>
+					<Box component="form"  onSubmit={handleSignup} sx={{ mt: 3 }}>
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={6}>
 								<TextField autoComplete="given-name" name="firstName" required fullWidth id="firstName"
@@ -114,13 +143,13 @@ export default function SignUp() {
 							</Grid>
 							<Grid item xs={12}>
 								<TextField required fullWidth id="email" label="Email Address" name="email"
-										   autoComplete="email" value={emailAddress}
+										   autoComplete="email" value={emailAddress} error={emailError} helperText={emailError ? "Invalid email" : ""}
 										   onChange={({target}) => setEmailAddress(target.value)}
 								/>
 							</Grid>
 							<Grid item xs={12}>
 								<TextField required fullWidth name="password" label="Password" type="password"
-										   id="password" autoComplete="new-password" value={password}
+										   id="password" autoComplete="new-password" value={password} error={passwordError} helperText={passwordError && errors.password.message}
 										   onChange={({target}) => setPassword(target.value)}
 								/>
 							</Grid>
