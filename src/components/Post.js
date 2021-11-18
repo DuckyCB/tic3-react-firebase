@@ -19,7 +19,7 @@ function Content({post, fullRender}) {
                 {post.title}
             </Typography>
             {post.imgURL ? <CardMedia component="img" alt="Image not fetched" image={post.imgURL}/> : null}
-            <Typography sx={fullRender ? {} : {maxHeight: 250, overflow: 'hidden', display: (post.imgURL === '' ?
+            <Typography sx={fullRender ? {padding: 4} : {padding: 4, maxHeight: 250, overflow: 'hidden', display: (post.imgURL === '' ?
                     'block' : 'none')}} align={"justify"} >
                 {post.content}
             </Typography>
