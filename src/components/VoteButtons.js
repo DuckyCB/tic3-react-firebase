@@ -75,7 +75,7 @@ return (
             <IconButton
                 color={userData ? (post.usersDownvote.includes(userData.id) ? "disabled" : "upvote"): "disabled"}
                 disabled={!userData || post.usersUpvote.includes(userData.id)}
-                style={(!userData || post.usersUpvote.includes(userData.id)) ? {color: '#FF8b60'}: {}}
+                style={userData ? (post.usersUpvote.includes(userData.id) ? {color: '#FF8b60'}: {}) : {}}
                 variant="outlined"
                 onClick={() => handleClick("upvote")}
             >
@@ -84,7 +84,7 @@ return (
             <IconButton
                 color={userData ? (post.usersUpvote.includes(userData.id) ? "disabled" : "downvote"): "disabled"}
                 disabled={!userData || post.usersDownvote.includes(userData.id)}
-                style={(!userData || post.usersDownvote.includes(userData.id)) ? {color: '#9494FF'}: {}}
+                style={userData ? (post.usersDownvote.includes(userData.id) ? {color: '#9494FF'}: {}) : {}}
                 variant="outlined"
                 onClick={() => handleClick("downvote")}
             >

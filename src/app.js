@@ -28,6 +28,9 @@ const getDesignTokens = (mode) => ({
                 orangebg: {main: '#ff9f00',}, white: {main: '#ffffff'}, upvote : {main: '#FF8b60'},  downvote : {main: '#9494FF'}, disabled : {main: "#626262"}, tonalOffset: 0,
             }),
     },
+    typography: {
+        "fontFamily": `verdana, arial, helvetica, sans-serif`,
+    }
 });
 function App () {
     const [userData, setUserData] = useState(null);
@@ -44,6 +47,7 @@ function App () {
     const logoutUser = async () => {
         await logout();
         setUserData(null);
+        window.location.reload(false);
     }
     return (
         <>

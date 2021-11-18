@@ -31,25 +31,7 @@ import Avatar from "@mui/material/Avatar";
 import { logout } from '../utils/userUtils';
 
 const drawerWidth = 240;
-// TODO: Obtener isntancia del usuario actual
-// const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-// 	({ theme, open }) => ({
-// 		flexGrow: 1,
-// 		padding: theme.spacing(3),
-// 		transition: theme.transitions.create('margin', {
-// 			easing: theme.transitions.easing.sharp,
-// 			duration: theme.transitions.duration.leavingScreen,
-// 		}),
-// 		marginRight: -drawerWidth,
-// 		...(open && {
-// 			transition: theme.transitions.create('margin', {
-// 				easing: theme.transitions.easing.easeOut,
-// 				duration: theme.transitions.duration.enteringScreen,
-// 			}),
-// 			marginRight: 0,
-// 		}),
-// 	}),
-// );
+
 
 const AppBar = styled(MuiAppBar, {
 	shouldForwardProp: (prop) => prop !== 'open',
@@ -100,6 +82,7 @@ export default function Navbar({user, onLogout}) {
 				<List>
 					<ListItem button key={'Login'} onClick={() => {
 						history.push(ROUTES.LOGIN);
+						handleDrawerClose();
 					}}>
 						<ListItemIcon>
 							<LoginIcon />
@@ -108,6 +91,7 @@ export default function Navbar({user, onLogout}) {
 					</ListItem>
 					<ListItem button key={'SignUp'} onClick={() => {
 						history.push(ROUTES.SIGNUP);
+						handleDrawerClose();
 					}}>
 						<ListItemIcon>
 							<SaveAltIcon />
@@ -132,6 +116,7 @@ export default function Navbar({user, onLogout}) {
 			<List>
 				<ListItem button key={'Profile'} onClick={() => {
 					history.push(`/u/${user.username}`);
+					handleDrawerClose();
 				}}>
 					<ListItemIcon>
 						<PersonIcon />
@@ -140,6 +125,7 @@ export default function Navbar({user, onLogout}) {
 				</ListItem>
 				<Divider />
 				<ListItem button key={'Logout'} onClick={async () => {
+					handleDrawerClose();
 					await onLogout();
 				}}>
 					<ListItemIcon>
@@ -202,27 +188,6 @@ export default function Navbar({user, onLogout}) {
 				</DrawerHeader>
 				<Divider />
 				{sidebar}
-				{/*<List>*/}
-				{/*	{['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (*/}
-				{/*		<ListItem button key={text}>*/}
-				{/*			<ListItemIcon>*/}
-				{/*				{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}*/}
-				{/*			</ListItemIcon>*/}
-				{/*			<ListItemText primary={text} />*/}
-				{/*		</ListItem>*/}
-				{/*	))}*/}
-				{/*</List>*/}
-				{/*<Divider />*/}
-				{/*<List>*/}
-				{/*	{['All mail', 'Trash', 'Spam'].map((text, index) => (*/}
-				{/*		<ListItem button key={text}>*/}
-				{/*			<ListItemIcon>*/}
-				{/*				{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}*/}
-				{/*			</ListItemIcon>*/}
-				{/*			<ListItemText primary={text} />*/}
-				{/*		</ListItem>*/}
-				{/*	))}*/}
-				{/*</List>*/}
 			</Drawer>
 		</Box>
 	);
