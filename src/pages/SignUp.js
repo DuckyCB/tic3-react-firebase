@@ -1,4 +1,4 @@
-import {Link, useHistory} from "react-router-dom";
+import {Link as RouterLink, Link, useHistory} from "react-router-dom";
 import {useContext, useEffect, useState, useRef} from "react";
 import FirebaseContext from "../context/firebase";
 import * as ROUTES from "../constants/routes";
@@ -131,14 +131,14 @@ export default function SignUp() {
 								/>
 							</Grid>
 						</Grid>
-						<Button color= "inherit" type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+						<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
 							Sign Up
 						</Button>
 						<Grid container justifyContent="flex-end">
 							<Grid item>
-								<Link href="#" variant="body2">
+								<Typography component={RouterLink} to={ROUTES.LOGIN} color="inherit">
 									Already have an account? Sign in
-								</Link>
+								</Typography>
 							</Grid>
 						</Grid>
 					</Box>
