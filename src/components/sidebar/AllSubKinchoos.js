@@ -36,7 +36,7 @@ export default function AllSubKinchoos() {
 
         async function getTopSubKinchoos() {
             try {
-                const q = query(collection(db, 'subkinchoo'), orderBy('followersCount', 'desc'));
+                const q = query(collection(db, 'subkinchoo'), orderBy('subname', 'asc'));
                 onSnapshot(q, (querySnapshot) => {
                     const _topSubKinchoos = [];
                     querySnapshot.forEach((doc) => {
