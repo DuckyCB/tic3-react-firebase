@@ -64,7 +64,7 @@ export default function LogIn() {
 			<Grid container component="main" sx={{ height: '100vh' }}>
 				<CssBaseline />
 				<Grid item xs={false} sm={4} md={7} sx={{
-						backgroundImage: 'url(https://static.onecms.io/wp-content/uploads/sites/20/2017/05/alexandra-daddario-womens-health-1-2000.jpg)',
+						backgroundImage: 'url(https://wallpapercave.com/wp/wp8554091.jpg)',
 						backgroundRepeat: 'no-repeat',
 						backgroundColor: (t) =>
 							t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
