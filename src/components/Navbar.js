@@ -155,7 +155,7 @@ export default function Navbar({user, onLogout}) {
 			<AppBar enableColorOnDark color="orangebg" sx={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0))'}} position="fixed" open={open}>
 				<Toolbar>
 					<Link to={ROUTES.DASHBOARD}>
-						<img src="../../kinchoo.png" style={{margin:10}} height={60} alt="Kinchoo"/>
+						<img src="https://i.ibb.co/1rKYbLs/kinchoo.png" style={{margin:10}} height={60} alt="Kinchoo"/>
 					</Link>
 					<Typography sx={{ flexGrow: 1 }} component="div">
 					</Typography>
