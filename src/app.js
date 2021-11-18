@@ -1,5 +1,5 @@
+import * as React from "react";
 import {lazy, Suspense, useEffect, useState} from "react";
-import * as React from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import * as ROUTES from './constants/routes'
 import {createTheme, ThemeProvider} from "@mui/material";

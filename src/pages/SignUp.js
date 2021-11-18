@@ -1,5 +1,5 @@
-import {Link as RouterLink, Link, useHistory} from "react-router-dom";
-import {useContext, useEffect, useState, useRef} from "react";
+import {Link as RouterLink, useHistory} from "react-router-dom";
+import {useContext, useEffect, useRef, useState} from "react";
 import FirebaseContext from "../context/firebase";
 import * as ROUTES from "../constants/routes";
 import {signUp} from "../services/firebase";
@@ -9,8 +9,8 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { useForm } from "react-hook-form";
-import { loginUser } from "../utils/userUtils";
+import {useForm} from "react-hook-form";
+import {loginUser} from "../utils/userUtils";
 
 
 export default function SignUp() {
@@ -18,7 +18,6 @@ export default function SignUp() {
 	const {firebase} = useContext(FirebaseContext)
 
 	const [username, setUsername] = useState('');
-	// const [fullName, setFullName] = useState('');
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 
@@ -30,7 +29,6 @@ export default function SignUp() {
 	const [avatar, setAvatar] = useState('');
 
 
-	// const [error, setError] = useState('');
 	const { register, handleSubmit, setError, formState: { errors }, clearErrors } = useForm();
 
 	const usernameRef = useRef(null);
@@ -41,36 +39,36 @@ export default function SignUp() {
 		event.preventDefault();
 
 		try {
-			if (hasWhiteSpace(username) || username.length < 4) {
-				setUsernameError(true);
-				setError('username', {
-					type: 'manual',
-					message: 'username can\'t have white spaces or shorter than 4 characters'
-				});
-				return;
-			} else {
-				setUsernameError(false);
-			}
+			if( hasWhiteSpace(username) || username.length < 4 || !hasAt(emailAddress) || password.length < 6) {
+				if (hasWhiteSpace(username) || username.length < 4) {
+					setUsernameError(true);
+					setError('username', {
+						type: 'manual',
+						message: 'username can\'t have white spaces or be shorter than 4 characters'
+					});
+				} else {
+					setUsernameError(false);
+				}
 
-			if (!hasAt(emailAddress)) {
-				setEmailError(true);
-				setError('password', {
-					type: 'manual',
-					message: 'Invalid email'
-				});
-				return;
-			} else {
-				setEmailError(false);
-			}
-			if (password.length < 6) {
-                setPasswordError(true);
-                setError('password', {
-                    type: 'manual',
-                    message: 'Password must be at least 6 characters'
-                });
-                return;
-            } else {
-				setPasswordError(false);
+				if (!hasAt(emailAddress)) {
+					setEmailError(true);
+					setError('password', {
+						type: 'manual',
+						message: 'Invalid email'
+					});
+				} else {
+					setEmailError(false);
+				}
+				if (password.length < 6) {
+					setPasswordError(true);
+					setError('password', {
+						type: 'manual',
+						message: 'Password must be at least 6 characters'
+					});
+				} else {
+					setPasswordError(false);
+				}
+				return
 			}
 
 			const user = await signUp(emailAddress, password, firstName, lastName, username, avatar);
@@ -84,7 +82,6 @@ export default function SignUp() {
 					message: 'username already exists'
 				});
 			}
-			// setError(code);
 			console.error(message);
 		}
 	};

@@ -1,6 +1,5 @@
 import {Card, CardContent, Paper, Stack, TextField, Typography} from "@mui/material";
 import React, {useEffect, useState} from "react";
-import styled from "@emotion/styled";
 import Box from "@mui/material/Box";
 import {Link as RouterLink} from "react-router-dom";
 import {addDoc, collection, onSnapshot, orderBy, query, Timestamp} from "firebase/firestore";
@@ -8,7 +7,6 @@ import {auth, db} from "../lib/firebase";
 import {formatMinutes} from "../utils/date-utils";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {fetchUserData} from "../utils/userUtils";
 

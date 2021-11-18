@@ -2,7 +2,7 @@ import {Card, CardActionArea, Skeleton, Stack, Typography} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import {useEffect, useState} from "react";
 import {Link as RouterLink} from "react-router-dom";
-import {collection, onSnapshot, orderBy, query, limit} from "firebase/firestore";
+import {collection, onSnapshot, orderBy, query} from "firebase/firestore";
 import {db} from "../../lib/firebase";
 
 function SubKinchooItem({ subKinchoo }) {

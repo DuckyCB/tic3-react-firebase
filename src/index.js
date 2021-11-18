@@ -7,7 +7,7 @@ import './styles/styles.css';
 
 ReactDOM.render(
 	<React.StrictMode>
-		<FirebaseContext.Provider value={{ app, db}}>
+		<FirebaseContext.Provider value={{ app, db }}>
 			<App/>
 		</FirebaseContext.Provider>
 	</React.StrictMode>,

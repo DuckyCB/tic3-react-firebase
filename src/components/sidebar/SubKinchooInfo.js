@@ -4,7 +4,7 @@ import Avatar from "@mui/material/Avatar";
 import {red} from "@mui/material/colors";
 import React, {useEffect, useState} from "react";
 import Button from "@mui/material/Button";
-import {collection, doc, getDoc, onSnapshot, query, where, writeBatch} from "firebase/firestore";
+import {collection, doc, onSnapshot, query, where, writeBatch} from "firebase/firestore";
 import {auth, db} from "../../lib/firebase";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {fetchUserData} from "../../utils/userUtils";

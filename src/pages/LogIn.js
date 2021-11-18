@@ -23,7 +23,6 @@ export default function LogIn() {
 	const {firebase} = useContext(FirebaseContext)
 
 	const [emailAddress, setEmailAddress] = useState('');
-	// const [loginError, setLoginError] = useState(false);
 	const [password, setPassword] = useState('');
 
 	const [error, setError] = useState('');
@@ -44,8 +43,7 @@ export default function LogIn() {
 		event.preventDefault();
 
 		try {
-			// await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
-            console.log(emailAddress, password);
+
 			await loginUser(emailAddress, password);
 			history.push(ROUTES.DASHBOARD);
 		} catch ({message}) {
@@ -53,7 +51,7 @@ export default function LogIn() {
 			setPassword('');
 			// Se podria cambiar este mensaje de error
 			setError(message);
-			// console.error(message);
+
 		}
 	};
 

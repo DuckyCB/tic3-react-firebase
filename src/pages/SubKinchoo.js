@@ -1,7 +1,6 @@
-import Navbar from "../components/Navbar";
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {collection, query, where, onSnapshot, orderBy} from "firebase/firestore";
+import {collection, onSnapshot, orderBy, query, where} from "firebase/firestore";
 import {db} from "../lib/firebase";
 import {Grid, Skeleton, Stack} from "@mui/material";
 import Timeline from "../components/Timeline";

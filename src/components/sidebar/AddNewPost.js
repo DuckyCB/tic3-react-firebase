@@ -25,8 +25,6 @@ export default function AddNewPost({ subKinchoo }) {
 	}, [user, loading]);
 
 	async function handleCreatePost() {
-		console.log(userData)
-		console.log(subKinchoo)
 		const docRef = await addDoc(collection(db, 'posts'), {
 			user: {id: userData.id, username: userData.username},
 			subKinchoo: {id: subKinchoo.id, subname: subKinchoo.subname, avatar: subKinchoo.avatar},

@@ -54,9 +54,7 @@ export default function Dashboard() {
 		setUserData(null);
 	}
 
-    // useEffect(() => {
-    //     console.log(user);
-    // }, [user]);
+
 
 	return (
 		<>

@@ -1,16 +1,12 @@
-import Navbar from "../components/Navbar";
 import React, {useEffect, useState} from "react";
-import {Link, useParams} from "react-router-dom";
-import {db} from "../lib/firebase";
-import {collection, getDocs, where, query, orderBy, onSnapshot} from "firebase/firestore";
+import {useParams} from "react-router-dom";
+import {auth, db} from "../lib/firebase";
+import {collection, getDocs, onSnapshot, orderBy, query, where} from "firebase/firestore";
 import {Grid, Skeleton, Stack} from "@mui/material";
 import Timeline from "../components/Timeline";
 import UserInfo from "../components/sidebar/UserInfo";
 import SkeletonPosts from "../components/skeleton/SkeletonPosts";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../lib/firebase";
-import { fetchUserData } from "../utils/userUtils";
-import * as ROUTES from '../constants/routes'
+import {useAuthState} from "react-firebase-hooks/auth";
 
 
 export default function UserProfile() {
@@ -57,42 +53,6 @@ export default function UserProfile() {
 		fetchPosts();
 	}, []);
 
-	// useEffect(() => {
-	// 	if (loading || !userState) return;
-	//
-	// 	const fetchData = async () => {
-	// 		console.log('fetching user data...');
-    //         setUser(await fetchUserData(userState));
-    //     };
-	//
-	// 	const fetchPosts = async () => {
-	//
-	// 		try {
-	// 			const postsQuery = query(collection(db, "posts"), where("user.username", "==", user.username),
-	// 				orderBy("createdAt", "desc"));
-	// 			onSnapshot(postsQuery, (querySnapshot) => {
-	// 				const postsArr = [];
-	// 				querySnapshot.forEach((doc) => {
-	// 					postsArr.push({
-	// 						id: doc.id,
-	// 						...doc.data(),
-	// 					});
-	// 				})
-	// 				setPosts(postsArr)
-	// 			});
-	// 		} catch (e) {
-	// 			console.error(e.message);
-	// 		}
-	// 	};
-	//
-	// 	const loadData = async () => {
-	// 		await fetchData();
-	// 		await fetchPosts();
-	// 	};
-	//
-	// 	loadData();
-	//
-	// }, [loading, userState])
 
 	document.title = user ? `u/${user.username}` : 'u/';
 
