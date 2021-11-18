@@ -84,7 +84,6 @@ export default function SubKinchooInfo( ) {
 		fetchSubKinchooData();
 		fetchData();
 	}, [user, loading]);
-	// TODO: Recuperar usuario logeado
 
 	return (
 		<Card sx={{width: 8/10}}>
